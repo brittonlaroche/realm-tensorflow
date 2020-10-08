@@ -80,7 +80,9 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 
 ![Auth2](./img/authenticate2.png)   
 
-## ![5](./img/5b.png) Connect to Realm from your Client   
+## ![5](./img/5b.png) Create a function   
+
+## ![6](./img/6b.png) Connect to Realm from your Client   
 
 
 ```js
@@ -174,10 +176,10 @@ Collapse
 </html>
 ```
 
-## ![6](./img/6b.png) Set up Hosting
+## ![7](./img/7b.png) Set up Hosting
 
 
-## ![7](./img/6b.png) Time to Play!
+## ![8](./img/8b.png) Time to Play!
 
 ![Auth2](./img/play1.png)   
 

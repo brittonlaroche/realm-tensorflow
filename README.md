@@ -8,6 +8,15 @@ TensorFlow is an end-to-end open source platform for machine learning. It has a 
 TensorFlow.js is a library for machine learning in JavaScript   
 Develop ML models in JavaScript, and use ML directly in the browser   
 
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+|Easy model building                            | Robust ML production anywhere                 |  Powerful experimentation for research        |
+|-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
+|![Easy Model](./img/tfMLAnywhere.png)          | ![ML Anywhere](./img/tfMLAnywhere.png)        | ![Easy Model Building](./img/tfResearch.png)  |
+|Build and train ML models easily using intuitive high-level APIs like the layer API, which makes for immediate model iteration and easy debugging.| Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use.|A simple and flexible architecture to take new ideas from concept to code, to state-of-the-art models, and to publication faster.|
 
 ### Easy model building
 ![Easy Model Building](./img/tfModel.png)   

@@ -10,16 +10,16 @@ Develop ML models in JavaScript, and use ML directly in the browser
 
 
 ### Easy model building
-![Easy Model Building](./img/tfModel.png)
+![Easy Model Building](./img/tfModel.png)   
 Build and train ML models easily using intuitive high-level APIs like the layer API, which makes for immediate model iteration and easy debugging.
 
 
 ### Robust ML production anywhere
-![Easy Model Building](./img/tfMLAnywhere.png)
+![Easy Model Building](./img/tfMLAnywhere.png)   
 Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use.
 
 ### Powerful experimentation for research
-![Easy Model Building](./img/tfResearch.png)
+![Easy Model Building](./img/tfResearch.png)   
 A simple and flexible architecture to take new ideas from concept to code, to state-of-the-art models, and to publication faster.
 
 ## ![1](./img/1b.png) Create an Atlas Cluster

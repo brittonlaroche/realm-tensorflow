@@ -1,0 +1,307 @@
+<html>
+<head>
+<!-----------------------------------------------------------------------------------------------------------------
+-- Version  Date          Author                Comments          
+-------------------------------------------------------------------------------------------------------------------
+-- 1.0      10/05/2020    Britton LaRoche       Initial Version
+--
+-------------------------------------------------------------------------------------------------------------------
+-->
+<script src="https://unpkg.com/realm-web@0.9.0/dist/bundle.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script>
+  const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+  let user;
+  let app;
+  let credentials;
+  let mongo;
+  let items;
+  const appConfig = {
+    id: appId,
+    timeout: 1000,
+  };
+  async function init(){
+    try{
+      await atlasConnect();
+    } finally {
+      console.log("Init Complete");
+    }
+  }
+  async function atlasConnect(){
+      app = new Realm.App(appConfig);
+      credentials = Realm.Credentials.anonymous(); // create an anonymous credential
+      user = await app.logIn(credentials);
+      console.dir(user);
+      mongo = app.services.mongodb("mongodb-atlas");
+  }
+  async function plot(pointsArray, featureName, predictedPointsArray = null) {
+    const values = [pointsArray.slice(0, 1000)];
+    const series = ["original"];
+    var graphName = document.getElementById("graphName").value;
+    var xDataField = document.getElementById("xData").value;
+    var yDataField = document.getElementById("yData").value;
+    if (Array.isArray(predictedPointsArray)) {
+      values.push(predictedPointsArray);
+      series.push("predicted");
+    }
+    tfvis.render.scatterplot(
+      { name: `${graphName}` },
+      { values, series },
+      {
+        xLabel: xDataField,
+        yLabel: yDataField,
+        height: 300,
+      }
+    )
+  }
+  async function graphDbData(){
+    var destDatabase = document.getElementById("loadDatabase").value;
+    var destCollection = document.getElementById("loadCollection").value;
+    const db = mongo.db(destDatabase);
+    const coll = db.collection(destCollection);
+    items = await coll.find({});
+    console.log("Items Length: " + items.length);
+    console.dir(items);
+    var numDocs = items.length;
+    var points = [];
+    if (numDocs > 1){
+      document.getElementById("predict-button").disabled=false;
+    } else {
+      document.getElementById("predict-button").disabled=true;
+    }
+    var xDataField = document.getElementById("xData").value;
+    var yDataField = document.getElementById("yData").value;
+    for  (i=0;i<numDocs;i++){
+
+      points[i] = {x: items[i][`${xDataField}`], y: items[i][`${yDataField}`]};
+    }
+    if(points.length % 2 !== 0) { // If odd number of elements
+      points.pop(); // remove one element
+    }
+    tf.util.shuffle(points);
+    plot(points, "Price");
+  }
+  async function loadCSVData(){
+    var csvUrl = document.getElementById("loadCSVUrl").value;
+    var destDatabase = document.getElementById("loadDatabase").value;
+    var destCollection = document.getElementById("loadCollection").value;
+    result = await user.functions.fnc_loadCSV(csvUrl,destDatabase,destCollection);
+    console.dir(result);
+    document.getElementById("recordsLoaded").innerHTML = "Records Loaded: " + result;
+    if (result > 1){
+      document.getElementById("predict-button").disabled=false;
+    } else {
+      document.getElementById("predict-button").disabled=true;
+    }
+  }
+  async function toggleVisor () {
+    tfvis.visor().toggle();
+  }
+  async function predict() {
+    try {
+      const mongo = app.services.mongodb("mongodb-atlas");
+      const db = mongo.db("InventoryDemo");
+      const coll = db.collection("FuelSales");
+      items = await coll.find({});
+      console.log("Items Length: " + items.length);
+      console.dir(items);
+
+      //---------------------------------------------------------
+      //-- Data prep
+      //---------------------------------------------------------
+
+      var numDocs = items.length;
+      var xInput =[];
+      var yOutput = [];
+      var priceTemp = [];
+      var totalSales = 0;
+      var xDataField = document.getElementById("xData").value;
+      var yDataField = document.getElementById("yData").value;
+      for  (i=0;i<numDocs;i++){
+        xInput[i] = items[i][`${xDataField}`];
+        yOutput[i] = items[i][`${yDataField}`];
+      }
+
+      //---------------------------------------------------------
+      //-- Tensor flow / ML Prediction Below
+      //---------------------------------------------------------
+
+      // Define a model for linear regression.
+      const model = tf.sequential();
+      model.add(tf.layers.dense({units: 1, useBias: true, activation: 'linear', inputShape: [1]}));
+
+      model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
+
+      // Generate some data for training.
+      console.dir(xInput);
+      console.dir(yOutput);
+      const xs = tf.tensor2d(xInput, [numDocs, 1]);
+      const ys = tf.tensor2d(yOutput, [numDocs, 1]);
+
+      var predictionInput = parseFloat(document.getElementById("prediction-input").value);
+      console.log("predictionInput: ");
+      console.dir(predictionInput);
+      let predictionOutput;
+
+      
+      const { onBatchEnd, onEpochEnd } = tfvis.show.fitCallbacks(
+      { name: "Training Performance" },
+        ['loss']
+      );
+      
+      var numEpochs = parseInt(document.getElementById("epochs-input").value);
+      // Train the model using the data.
+      tfvis.show.modelSummary({ name: "Model summary" }, model);
+      const layer = model.getLayer(undefined, 0);
+      tfvis.show.layer({ name: "Layer 1" }, layer);
+      if (document.getElementById("graphLoss").checked){
+        model.fit(xs, ys, {epochs: numEpochs, callbacks: {
+          onEpochEnd,onBatchEnd}}).then(() => {
+            // Use the model to do inference on a data point the model hasn't seen before:
+            predictionOutputTensor = model.predict(tf.tensor2d([predictionInput], [1, 1]));
+            console.log("predictionOutput: " + predictionOutputTensor);
+            // Open the browser devtools to see the output and set the value in the html field
+            document.getElementById("prediction-output").innerHTML = "Predicted value: " + predictionOutputTensor.dataSync()[0];
+        });
+      } else {
+        model.fit(xs, ys, {epochs: numEpochs }).then(() => {
+            // Use the model to do inference on a data point the model hasn't seen before:
+            predictionOutputTensor = model.predict(tf.tensor2d([predictionInput], [1, 1]));
+            console.log("predictionOutput: " + predictionOutputTensor);
+            // Open the browser devtools to see the output and set the value in the html field
+            document.getElementById("prediction-output").innerHTML = "Predicted value: " + predictionOutputTensor.dataSync()[0];
+        });
+      }
+    } finally {
+      if (user) {
+        //user.logOut();
+      }
+    }
+  }
+  init().catch(console.dir);
+</script>
+<p>Check the console</p>
+</head>
+<body>
+  <!--   Header   -->
+<div class="section no-pad-bot" id="index-banner">
+  <div class="container">
+    
+    <h5 class="header center green-text small">Machine Learning with MongoDB Atlas and TensorFlow.js</h5>
+    <div class="row center">
+      <h6 class="header col s12 light">Train a model to predict the quantity of gallons sold from gas price.</h6>
+    </div>
+  </div>
+</div>
+ 
+<!--   Misc buttons   -->
+<div class="section no-pad-bot light-green lighten-4">
+  <div class="container">
+    <div class="row center">
+      <button id="toggle-button" class="waves-effect waves-light light-green btn-small" onclick="toggleVisor()">Toggle Visor</button>
+      <br/><br/>
+    </div>
+  </div>
+</div>
+ 
+<!--   Main functionality   -->
+<div class="container">
+  <div class="section">
+
+    <div class="row">
+      <!--   Load data from csv into MongoDB  -->
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h3 class="center light-green-text"><i class="material-icons" style="font-size: 2em">input</i></h3>
+          <h5 class="center">Load Sample Data</h5>
+
+          <label>File URL: <input type="text" id="loadCSVUrl" value="https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv" placeholder=""/></label>
+          <label>Database: <input type="text" id="loadDatabase" value="InventoryDemo"/></label>
+          <label>Collection: <input type="text" id="loadCollection" value="FuelSales"/></label>
+          <button autocomplete="off" id="loadcsv-button" class="waves-effect light-green waves-light btn" onclick="loadCSVData()">Load CSV Data</button>
+          <p><strong id="recordsLoaded"></strong></p>
+        </div>
+      </div>
+      <!--   Plot data   -->
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h3 class="center light-green-text"><i class="material-icons" style="font-size: 2em">leaderboard</i></h3>
+          <h5 class="center">Graph Sample Data</h5>
+
+          <label>Graph Name: <input type="text" id="graphName" value="Price vs Gallons Sold" placeholder=""/></label>
+          <label>X Data Field: <input type="text" id="xData" value="price"/></label>
+          <label>Y Data Field: <input type="text" id="yData" value="sales_quantity"/></label>
+          <button autocomplete="off" id="graph-button" class="waves-effect light-green waves-light btn" onclick="graphDbData()">Graph DB Data</button>
+        </div>
+      </div>
+    </div>
+
+ 
+    <div class="row">
+      <!--   Training   -->
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h3 class="center amber-text"><i class="material-icons" style="font-size: 2em">track_changes</i></h3>
+          <h5 class="center">Train & Test</h5>
+ 
+          <p class="light"></p>
+ 
+          <div>
+            <p><label>Training status:</label></p>
+            <pre class="grey lighten-4" style="overflow-x: auto"><em id="model-status">Loading data...</em></pre>
+ 
+            <p><label>Testing status:</label></p>
+            <pre class="grey lighten-4" style="overflow-x: auto"><em id="testing-status">Not yet tested</em></pre>
+ 
+            <button autocomplete="off" id="train-button" class="waves-effect amber waves-light btn" disabled onclick="train()">Train New Model</button>
+            <button autocomplete="off" id="test-button" class="waves-effect amber waves-light btn" disabled onclick="test()">Test Model</button>
+          </div>
+          <br/>
+ 
+          <div>
+            <button autocomplete="off" id="load-button" class="waves-effect amber waves-light btn-small" disabled onclick="load()">Load Model From DB</button>
+            <button autocomplete="off" id="save-button" class="waves-effect amber waves-light btn-small" disabled onclick="save()">Save Model to DB</button>
+          </div>
+ 
+        </div>
+      </div>
+ 
+      <!--   Prediction   -->
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h3 class="center amber-text"><i class="material-icons" style="font-size: 2em">timeline</i></h3>
+          <h5 class="center">Predict</h5>
+ 
+          <label>Input Value (x): <input type="number" id="prediction-input" value="1.78"/></label>
+          <label>Epochs: <input type="number" id="epochs-input" value="100"/></label>
+          <button autocomplete="off" id="predict-button" class="waves-effect amber waves-light btn" disabled onclick="predict()">Predict Output</button>
+          <label>
+            <input type="checkbox" id="graphLoss"/>
+            <span>Graph Loss</span>
+          </label>
+          <p><strong id="prediction-output"></strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="row center">
+      <br><br><br>
+      <table class="centered">
+        <tr><td></td><td></td></tr>
+        <tr><td>
+        <img width="150px" src="https://webassets.mongodb.com/_com_assets/cms/MongoDB_Logo_FullColorBlack_RGB-4td3yuxzjs.png">
+        </td><td>
+        <img width="150px" src="https://www.gstatic.com/devrel-devsite/prod/v85e39fe21f53c758adf6c791fb94a7a2182cff2705b3dc8ed7c59fc745471159/tensorflow/images/lockup.svg">
+        </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+
+

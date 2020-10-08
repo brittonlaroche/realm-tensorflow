@@ -1,0 +1,91 @@
+<html>
+<head>
+<!-----------------------------------------------------------------------------------------------------------------
+-- Version  Date          Author                Comments          
+-------------------------------------------------------------------------------------------------------------------
+-- 1.0      10/05/2020    Britton LaRoche       Initial Version
+--
+-------------------------------------------------------------------------------------------------------------------
+-->
+<script src="https://unpkg.com/realm-web@0.9.0/dist/bundle.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+<script>
+  const appId = "tensorflow-frhmy"; // Set Realm app ID here.
+  const appConfig = {
+    id: appId,
+    timeout: 1000,
+  };
+  async function run() {
+    let user;
+    try {
+      const app = new Realm.App(appConfig);
+      const credentials = Realm.Credentials.anonymous(); // create an anonymous credential
+      user = await app.logIn(credentials);
+      console.dir(user);
+      result = await user.functions.fnc_loadCSV("https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv","InventoryDemo","FuelSales");
+      console.dir(result);
+      const mongo = app.services.mongodb("mongodb-atlas");
+      const db = mongo.db("InventoryDemo");
+      const coll = db.collection("FuelSales");
+      items = await coll.find({});
+      console.log("Items Length: " + items.length);
+      console.dir(items);
+
+      //---------------------------------------------------------
+      //-- Data prep
+      //---------------------------------------------------------
+
+      var numDocs = items.length;
+      var xInput =[];
+      var yOutput = [];
+      var priceTemp = [];
+      var totalSales = 0;
+      for  (i=0;i<numDocs;i++){
+        //priceTemp = [items[i].price, items[i].high_temperature];
+        //totalSales = items[i].sales_total;
+        xInput[i] = items[i].price;
+        yOutput[i] = items[i].sales_quantity;
+      }
+
+      //---------------------------------------------------------
+      //-- Tensor flow / ML Prediction Below
+      //---------------------------------------------------------
+
+      // Define a model for linear regression.
+      const model = tf.sequential();
+      model.add(tf.layers.dense({units: 1, useBias: true, activation: 'linear', inputShape: [1]}));
+
+      model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
+
+      // Generate some synthetic data for training.
+      //const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]);
+      //const ys = tf.tensor2d([1, 3, 5, 7], [4, 1]);
+      console.dir(xInput);
+      console.dir(yOutput);
+      const xs = tf.tensor2d(xInput, [numDocs, 1]);
+      const ys = tf.tensor2d(yOutput, [numDocs, 1]);
+
+
+      // Train the model using the data.
+      model.fit(xs, ys, {epochs: 100}).then(() => {
+          // Use the model to do inference on a data point the model hasn't seen before:
+          model.predict(tf.tensor2d([3.25], [1, 1])).print();
+          // Open the browser devtools to see the output
+      });
+    } finally {
+      if (user) {
+        user.logOut();
+      }
+    }
+  }
+  run().catch(console.dir);
+</script>
+<p>Check the console</p>
+Collapse
+</head>
+<body>
+</body>
+</html>
+
+
+

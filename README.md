@@ -294,7 +294,7 @@ We see that a prediction was made at the very end.  Opening the first array of v
    
 ![Console](./img/appRun2.png)   
    
-THe last value is the predicted amount of gas sales in gallons and its not correct.  Change the epochs value from 100 to 5000 and let the model train more.  Each epoch is a cycle through the entire data set using mean squared error to determine the distance from a line it thinks fits the data best.  Each epoch refines the model more during the training process.
+The last value is the predicted amount of gas sales in gallons, and its not correct.  The current model expects to sell more gas at the higher the price.  Change the epochs value from 100 to 5000 and let the model train more.  Each epoch is a cycle through the entire data set using mean squared error to determine the distance from a line it thinks fits the data best.  Each epoch refines the model more during the training process.
 
 ```
 model.fit(xs, ys, {epochs: 100}).then(() => {
@@ -307,6 +307,14 @@ model.fit(xs, ys, {epochs: 5000}).then(() => {
 ```   
    
 After you save the change, refersh the page.  It will take longer to run but the prediction of how much gas you can sell at $3.25 when the price is closer to $1.89 should be much lower than the first predition.  You've just written your first machine learning program and modified the model training to produce a more realistic result.
+
+You can see the data loaded into MongoDB by using the Atlas collection browser.  Click the __"Atlas"__ tab in the realm console to see a view of your cluster for the project, then click the __"Collections"__ button in the middle.
+   
+![Collection](./img/atlasCollection1.png)   
+    
+When we click the __"Collections"__ button it should show us our __"InventoryDemo"__ database and all the documents in the __"FuelSales"__ collection.   
+    
+![Collection](./img/atlasCollection2.png)   
 
 Be sure to study the code as it is very simple but has all the elements in jsut a few lines of code.  Next we will use a more complex version in the link below.   
    

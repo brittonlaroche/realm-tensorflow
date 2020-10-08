@@ -90,11 +90,15 @@ The provider enabled / disabled dialog window appears.  Toggle the permission to
 ![Auth2](./img/authenticate2.png)   
 
 ## ![5](./img/5b.png) Create a function   
-We have created authorization rules for a database collection and set up authentication.  We are now ready to write our first application function.
-
+We have created authorization rules for a database collection and set up authentication.  We are now ready to write our first application function.  Begin by selecting the __"Funtions"__ menu item from the left naviagtion pane of the Realm console. Click the __"Create New Function"__ button.
+   
 ![function1](./img/function1.png)   
+   
+The create function dialog window is presented.  Name the function __"fnc_loadCSV"__ with out the quotes. __BE SURE TO SELECT "SYSTEM" as the AUTHENTICATION METHOD__ Again be user to select the system authentication method for now.  As a future execsize you might try __"Application Authentication"__ later after we create our first application to see what happens!  Click the __"Save"__ button to proceed.   
 
 ![function2](./img/function2.png)   
+   
+The __"Function Editor"__ dialog window opens.  Here we write the code to our function.  I have taken the liberty of writing the code for you.  This is on oar with demo code and needs to be enhanced and tested if you wish to have a truly robust method of loading in any CSV file.  Copy and paste the code from below into the editor and click __"Save"__ then __"Review & Deploy"__ your changes.
 
 ![function1](./img/function3.png)   
 

@@ -54,9 +54,10 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 
 ![collection2](./img/configColl2.png)   
 
-![collection3](./img/configColl3.png)   
+![collection4](./img/configColl4.png)   
 
 ## ![4](./img/4b.png) Set up Application Authentication   
+
 
 ## ![5](./img/5b.png) Connect to Realm from your Cleint   
 

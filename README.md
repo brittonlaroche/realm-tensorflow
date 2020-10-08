@@ -82,6 +82,12 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 
 ## ![5](./img/5b.png) Create a function   
 
+![function1](./img/function1.png)   
+
+![function2](./img/function2.png)   
+
+![function1](./img/function3.png)   
+
 ```js
 exports = async function(arg_fileLocation, arg_database, arg_collection){
   // Example 
@@ -235,6 +241,7 @@ Collapse
 
 ## ![7](./img/7b.png) Set up Hosting
 
+![function1](./img/hosting1.png)   
 
 ## ![8](./img/8b.png) Time to Play!
 

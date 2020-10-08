@@ -294,13 +294,13 @@ We see that a prediction was made at the very end.  Opening the first array of v
    
 ![Console](./img/appRun2.png)   
    
-THe last value is the predicted amount of gas sales in gallons and its not correct.  Change the epoc value from 100 to 5000 and let the model train more.
+THe last value is the predicted amount of gas sales in gallons and its not correct.  Change the epochs value from 100 to 5000 and let the model train more.  Each epoch is a cycle through the entire data set using mean squared error to determine the distance from a line it thinks fits the data best.  Each epoch refines the model more during the training process.
 
 ```
 model.fit(xs, ys, {epochs: 100}).then(() => {
 ```   
 
-Changing this value to 5000 looks like the following
+Changing the epochs value to 5000 looks like the following
    
 ```
 model.fit(xs, ys, {epochs: 5000}).then(() => {
@@ -308,7 +308,15 @@ model.fit(xs, ys, {epochs: 5000}).then(() => {
    
 After you save the change, refersh the page.  It will take longer to run but the prediction of how much gas you can sell at $3.25 when the price is closer to $1.89 should be much lower than the first predition.  You've just written your first machine learning program and modified the model training to produce a more realistic result.
 
-https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html
+Be sure to study the code as it is very simple but has all the elements in jsut a few lines of code.  Next we will use a more complex version in the link below.   
+   
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   
+   
+Copy the contents of this file and save it as index.html. Change the following line to your app id, save and then double click this file to view it.   
+
+```js
+const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+```
 
 ## ![7](./img/7b.png) Set up Hosting
 

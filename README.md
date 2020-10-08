@@ -1,9 +1,21 @@
 # realm-tensorflow
-![Tensorflow](./img/tensorflow3.png)
 
-###TensorFlow.js
+
+### Why TensorFlow
+TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications.
+
+### TensorFlow.js
 TensorFlow.js is a library for machine learning in JavaScript   
 Develop ML models in JavaScript, and use ML directly in the browser   
+
+### Easy model building
+Build and train ML models easily using intuitive high-level APIs like the layer API, which makes for immediate model iteration and easy debugging.
+
+### Robust ML production anywhere
+Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use.
+
+### Powerful experimentation for research
+A simple and flexible architecture to take new ideas from concept to code, to state-of-the-art models, and to publication faster.
 
 ## ![1](./img/1b.png) Create an Atlas Cluster
 Our first step is to create an atlas cluster. Create a free tier cluster known as an M0. 

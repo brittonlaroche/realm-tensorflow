@@ -153,7 +153,7 @@ Collapse
 </html>
 ```
 
-## ![6](./img/5b.png) Set up Hosting
+## ![6](./img/6b.png) Set up Hosting
 
 
 

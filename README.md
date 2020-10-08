@@ -88,6 +88,8 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 
 ![function1](./img/function3.png)   
 
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/fnc_loadCSV.js
+
 ```js
 exports = async function(arg_fileLocation, arg_database, arg_collection){
   // Example 
@@ -147,6 +149,9 @@ async function parseCSV(csv, stage){
 
 ## ![6](./img/6b.png) Connect to Realm from your Client   
 
+
+
+https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/html/firstVersion.html
 
 ```js
 <html>
@@ -239,6 +244,8 @@ Collapse
 </html>
 ```
 
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html
+
 ## ![7](./img/7b.png) Set up Hosting
 
 ![function1](./img/hosting1.png)   
@@ -246,4 +253,6 @@ Collapse
 ## ![8](./img/8b.png) Time to Play!
 
 ![Auth2](./img/play1.png)   
+
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html
 

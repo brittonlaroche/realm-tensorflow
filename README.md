@@ -68,8 +68,12 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 ![realm4](./img/createRealmApp4.png)   
 
 ## ![3](./img/3b.png) Configure a Collection
+In order to insert data into Atlas we have to configure Realm rules that allow our browser SDK connect.  But first we have to prepare authorization to connect to a specific database and collection.  Lets begin by selecting the __"Rules"__ menu item on the left navigation pane of the Realm console as seen below.  This will bring up a dialog asking us to add a collection.  Click the __"Add Collection"__ button.   
+   
 ![collection1](./img/configColl1.png)   
-
+   
+In the add new collection dialog we will be creating authorzation rules for a new database and a new collection.  We have to type in the names manually and select the small dialog box directly below that says __"Create ..."__ as the database and collection do not exist yet.  Type in __"InventoryDemo"__ for the database name and click the __"Create InventoryDemo"__ dialog box.  Then for the collection name type in __"FuelSales"__ and click the __"Create FuelSales"__ dialog box.  We will go with the default __"No template"__ selection for the permissions template and then click the __"Add Collection"__ button on the lower right.   
+   
 ![collection2](./img/configColl2.png)   
 
 ![collection4](./img/configColl4.png)   

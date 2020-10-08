@@ -114,7 +114,7 @@ The __"Function Editor"__ dialog window opens.  Here we write the code to our fu
 
 ![function1](./img/function3.png)   
 
-https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/fnc_loadCSV.js
+Copy and paste from the code below.  If you notice errors you should probably cut and paste from the raw github file linked below the code snippet.
 
 ```js
 exports = async function(arg_fileLocation, arg_database, arg_collection){
@@ -173,9 +173,25 @@ async function parseCSV(csv, stage){
 }
 ```
 
+The source code to the fucntion is available here on github under the HTML directory and in the link below:   
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/fnc_loadCSV.js   
+
 ## ![6](./img/6b.png) Connect to Realm from your Client   
 
+We are now ready to create our first machine learning application.  In the code below we see that we are including two main javascript libraries that have all the fuctions we need. One is for Mongo DB Realm and the other is for Tensorflow.    
 
+```js
+<script src="https://unpkg.com/realm-web@0.9.0/dist/bundle.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+```
+
+Cut and paste the file contents below into your code editor.  If you don't have a code editor I recommend vscode you can get it here: https://code.visualstudio.com/download   
+   
+Save the file in your working directory as __"firstVersion.html"__  We need to make one change to the application to get it to work, and that it to add your reaml application id that we created in step 2.  Replace __"YOUR-APP-ID"__ with the value copied from the realm console.  Then save the file and double click it to open it in the broswer.
+
+```js
+const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+```
 
 https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/html/firstVersion.html
 
@@ -269,6 +285,28 @@ Collapse
 </body>
 </html>
 ```
+
+When you double click the application it will open in the browser.  It will connect to MongDB and load the FuelSales collection from the CSV file located in the data directory of this git hub.  Then it will query the data from the database, prepare the data, train the model and make a prediction.  You can see the results by opening the developer tools and looking at the console.
+
+![Console](./img/appRun1.png)   
+   
+We see that a prediction was made at the very end.  Opening the first array of values shows how the fnc_loadCSV function we created translated each row of the CSV file to a JSON document.  Each value in the first array is a document.   
+   
+![Console](./img/appRun2.png)   
+   
+THe last value is the predicted amount of gas sales in gallons and its not correct.  Change the epoc value from 100 to 5000 and let the model train more.
+
+```
+model.fit(xs, ys, {epochs: 100}).then(() => {
+```   
+
+Changing this value to 5000 looks like the following
+   
+```
+model.fit(xs, ys, {epochs: 5000}).then(() => {
+```   
+   
+After you save the change, refersh the page.  It will take longer to run but the prediction of how much gas you can sell at $3.25 when the price is closer to $1.89 should be much lower than the first predition.  You've just written your first machine learning program and modified the model training to produce a more realistic result.
 
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html
 

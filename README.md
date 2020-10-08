@@ -58,6 +58,9 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 
 ## ![4](./img/4b.png) Set up Application Authentication   
 
+![Auth1](./img/authenticate1.png)   
+
+![Auth2](./img/authenticate2.png)   
 
 ## ![5](./img/5b.png) Connect to Realm from your Client   
 
@@ -158,5 +161,5 @@ Collapse
 
 ## ![7](./img/6b.png) Time to Play!
 
-
+![Auth2](./img/play1.png)   
 

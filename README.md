@@ -42,14 +42,18 @@ Our first step is to create an atlas cluster. Create a free tier cluster known a
 
 Click the following link https://cloud.mongodb.com to sign up. Additional instructions on creating an Atlas cluster are available here: [Atlas getting started Guide](https://docs.atlas.mongodb.com/getting-started/)  
 
+The easiest way to get started is to authenticate with google if you have a gmail account.  If not you can fill in the form and prvide the email adress of your choosing.   
+    
 ![Atlas1](./img/newAtlas1.png)   
    
+When you create your account you will be asked to create a an organization and a project. You can come up with any number of creative names for your organization. The default project name is __"Project0"__, but I prefer to name it something more meaningful like __"Machine Learning"__.  This is not necessary, but it is good form to clearly identify what your project is. For this lab we will be primarily working with javascript so lets select that option as our prefered language.   
+   
 ![Atlas2](./img/newAtlas2.png)   
+
+Now we get a dialog to select the type of cluster we want.  Lets go with __"Shared Clusters"__ on the left because it has a free tier, which is all we need to get started with our first machine learning application.
    
 ![Atlas3](./img/newAtlas3.png)   
    
-   
-When you create your account you will be asked to create a project.  If you have gone with the default __"Project0"__ then create a new project and name it __"Machine Learning"__.  This is not necessary, but it is good form to clearly identify what your project is.   
 
 __BE SURE TO CREATE ATLAS VERSION 4.4__   
 ![Atlas](./img/Atlas5.png)   

@@ -21,7 +21,7 @@ This project uses Tensorflow.js, MongoDB Realm and Atlas to provide you with eve
 
 I chose Tensorflow.js for this project because it is very intuitive, easy to pick up and the results can be seen directly in the web browser with just a few lines of code. I was able to watch a few Tensorflow.js videos and create the first version of this app in a weekend.  Its only 88 lines of code but it loads sales data from a gas station into MongoDB, creates a Tensorflow model from MongoDB, tranis the model and makes a prediction on how many gallons will be sold based on price in just 88 lines of code!
 
-I highly recommedn the followng 3 videos, about 7 minutes each.  It will be the best 21 minutes you can spend to learn all the core concepts.    
+I highly recommend watching the followng 3 videos, about 7 minutes each.  It will be the best 21 minutes you can spend to learn all the core concepts.    
    
 <a href="https://www.youtube.com/playlist?list=PLs6AluHXaQnjeI6jzDkpKXvbPj31i4GgF" target="videos"><img src="./img/tfjsvideos.png"></a>   
 

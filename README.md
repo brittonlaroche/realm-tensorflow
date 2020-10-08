@@ -1,5 +1,5 @@
 # realm-tensorflow
-![Tensorflow](./img/tensorflow2.png)
+![Tensorflow](./img/tensorflow3.png)
 
 
 ## ![1](./img/1b.png) Create an Atlas Cluster

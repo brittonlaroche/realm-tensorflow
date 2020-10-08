@@ -50,6 +50,11 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
 ![realm4](./img/createRealmApp4.png)   
 
 ## ![3](./img/3b.png) Configure a Collection
+![collection1](./img/configColl1.png)   
+
+![collection2](./img/configColl2.png)   
+
+![collection3](./img/configColl3.png)   
 
 ## ![4](./img/4b.png) Set up Application Authentication   
 

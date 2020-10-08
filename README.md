@@ -81,12 +81,16 @@ Now we are ready to define the read and write rules for the __"FuelSales"__ coll
 ![collection4](./img/configColl4.png)   
 
 ## ![4](./img/4b.png) Set up Application Authentication   
-
+We have given specific authorization rules to a databse collection in the step above.  Now we need to provide an Authentication mechanism for our application.  The easiest way to get started is to allow users to log in Anonymously.  This is accomplised by selecting the __"Authentication"__ menu item from the left navigation pane of the Realm console as seen below.  We can see that the __"Allow users to log in anonymously"__ option has the enabled parameter set to off.  Click the edit button to chnage this value.   
+   
 ![Auth1](./img/authenticate1.png)   
-
+   
+The provider enabled / disabled dialog window appears.  Toggle the permission to __"ON"__ and press the __"Save"__ button to the changes and then remember to __"Review & Deploy"__ your changes.  
+   
 ![Auth2](./img/authenticate2.png)   
 
 ## ![5](./img/5b.png) Create a function   
+We have created authorization rules for a database collection and set up authentication.  We are now ready to write our first application function.
 
 ![function1](./img/function1.png)   
 

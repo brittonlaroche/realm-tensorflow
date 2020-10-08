@@ -156,4 +156,7 @@ Collapse
 ## ![6](./img/6b.png) Set up Hosting
 
 
+## ![7](./img/6b.png) Time to Play!
+
+
 

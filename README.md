@@ -26,6 +26,8 @@ __BE SURE TO CREATE ATLAS VERSION 4.4__
 
 Click the following link https://cloud.mongodb.com to sign up. Additional instructions on creating an Atlas cluster are available here: [Atlas getting started Guide](https://docs.atlas.mongodb.com/getting-started/)  
 
+![Atlas](./img/Atlas5.png)   
+
 When you create your account you will be asked to create a project.  If you have gone with the default __"Project0"__ then create a new project and name it __"Machine Learning"__.  This is not necessary, but it is good form to clearly identify what your project is.
 
 
@@ -35,7 +37,13 @@ Our second step is to create a Realm application.  MongoDB Realm has a number of
 
 Open the Atlas console and select the __"Realm"__ tab in the upper middle.  This brings up a dialog to create your first realm application. Select __"Web"__ as the primary application we are building for, and __"No I'm starting from scratch"__ when asked if you are currently using the Realm database.
 
+![realm1](./img/createRealmApp1.png)   
 
+![realm2](./img/createRealmApp2.png)   
+
+![realm3](./img/createRealmApp3.png)   
+
+![realm4](./img/createRealmApp4.png)   
 
 
 

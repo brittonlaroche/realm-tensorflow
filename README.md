@@ -28,7 +28,11 @@ I highly recommedn the followng 3 videos, about 7 minutes each.  It will be the 
 I also recommend a Udemy course for some deeper learning and good examples and place a link in the final part of this lab.
 
 ## Why MongoDB?
-MongoDB is the best database for machine learning for a number of reasons.  The first reason is that MongoDB has a flexible schema, unlike a relational database where you have to define a schema and tables with column definitions, MongoDB allows you to load data directly with out any upfront schema design.  This means that you can load data form any new source and get to work immediately.  Once the data is loaded MongoDB provides you with a powerful query language and indexes to give you fast access to very specific values that you would want to use.  But don't take my word for it, in the next few sections you will literally see for yourself.
+MongoDB is the best database for machine learning for a number of reasons.  The first reason is that MongoDB has a flexible schema, unlike a relational database where you have to define a schema and tables with column definitions, MongoDB allows you to load data directly with out any upfront schema design.  This means that you can load data form any new source and get to work immediately.    
+      
+![1](./img/mongoDBAtlas.png)      
+      
+Once the data is loaded MongoDB provides you with a powerful query language and indexes to give you fast access to very specific values that you would want to use.  But don't take my word for it, in the next few sections you will literally see for yourself.
 
 ## ![1](./img/1b.png) Create an Atlas Cluster
 Our first step is to create an atlas cluster. Create a free tier cluster known as an M0.     

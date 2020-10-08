@@ -55,7 +55,7 @@ Now we get a dialog to select the type of cluster we want.  Lets go with __"Shar
 ![Atlas3](./img/newAtlas3.png)   
    
 
-__BE SURE TO CREATE ATLAS VERSION 4.4__   Select version 4.4 from the list of availble versions of Atlas. Then click the __"Create Cluster"__ button on the bottom right.   
+Notice that you can deploy in any of the three major cloud providers (AWS, GCP or Azure).  I went with AWS and the default region. __BE SURE TO CREATE ATLAS VERSION 4.4__   Select version 4.4 from the list of availble versions of Atlas.  Then click the __"Create Cluster"__ button on the bottom right.   
    
 ![Atlas](./img/Atlas5.png)   
 

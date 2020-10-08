@@ -8,7 +8,7 @@
 
 ## TensorFlow.js      
 
-![TensorFlow](./img/tensorflowjsLogo.png) 
+![TensorFlow](./img/tensorflowjsLogo.png)    
 TensorFlow.js is a library for machine learning in JavaScript. Develop ML models in JavaScript, and use ML directly in the browser   
 
 |Easy model building                            | Robust ML production anywhere                 |  Powerful experimentation for research        |

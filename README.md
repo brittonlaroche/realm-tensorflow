@@ -4,8 +4,7 @@
 | Why TensorFlow?       | TensorFlow.js      |
 |-----------------------|--------------------|
 |![TensorFlow](./img/tfLogo2.png)    | ![TensorFlow](./img/tensorflowjsLogo.png) |
-|TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications.|TensorFlow.js is a library for machine learning in JavaScript   
-Develop ML models in JavaScript, and use ML directly in the browser   |
+|TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications.|TensorFlow.js is a library for machine learning in JavaScript. Develop ML models in JavaScript, and use ML directly in the browser   |
 
 
 |Easy model building                            | Robust ML production anywhere                 |  Powerful experimentation for research        |

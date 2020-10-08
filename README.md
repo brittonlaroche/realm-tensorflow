@@ -20,7 +20,7 @@ TensorFlow.js is a library for machine learning in JavaScript. Develop ML models
 This project uses Tensorflow.js, MongoDB Realm and Atlas to provide you with everything you need to create a cloud based machine learning platform with nothing more than a modern web browser, and the determination to begin with some good "old fashioned" human learning.  This short tutorial expects that you know nothing about MongoDB Atlas, Realm or Machine Learning with Google Tensorflow. We chose Tensorflow.js for this project because it is very intuitive, easy to pick up and the results can be seen directly in the web browser with just a few lines of code.
 
 ## ![1](./img/1b.png) Create an Atlas Cluster
-![realm](./img/mongodb-atlas.jpg)   
+![Atlas](./img/mongoDBAtlas.png)   
 Our first step is to create an atlas cluster. Create a free tier cluster known as an M0. 
 
 Click the following link https://cloud.mongodb.com to sign up. Additional instructions on creating an Atlas cluster are available here: [Atlas getting started Guide](https://docs.atlas.mongodb.com/getting-started/)  

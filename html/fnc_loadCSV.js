@@ -1,6 +1,6 @@
 exports = async function(arg_fileLocation, arg_database, arg_collection){
   // Example 
-  // exports("https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv","ItemDemo","FuelSales")
+  // exports("https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv","InventoryDemo","FuelSales")
   var sUrl = arg_fileLocation;
   var stage = context.services.get("mongodb-atlas").db(arg_database).collection(arg_collection);
   var count = 0;

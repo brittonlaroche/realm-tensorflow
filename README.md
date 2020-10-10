@@ -176,7 +176,8 @@ async function parseCSV(csv, stage){
 The source code to the fucntion is available here on github under the HTML directory and in the link below:   
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/fnc_loadCSV.js  
 
-Also notice that you can load your own CSV file by uploaing it into git hub and then gettin gthe link to the __"RAW"__ file.
+Also notice that you can load your own CSV file by uploaing it into git hub and then getting the link to the __"RAW"__ file. Paste the new link into the html file for teh function call and you will be loading your own data set.  The function handles strings and numbers only.  It makes one exception for a field labled __"date"__ which it will treat as a string.   
+
 __NOTE: it has to be the RAW file or it won't load correctly!!!__
 
 https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv

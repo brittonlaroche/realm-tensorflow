@@ -110,7 +110,7 @@ The create function dialog window is presented.  Name the function __"fnc_loadCS
 
 ![function2](./img/function2.png)   
    
-The __"Function Editor"__ dialog window opens.  Here we write the code to our function.  I have taken the liberty of writing the code for you.  This is on oar with demo code and needs to be enhanced and tested if you wish to have a truly robust method of loading in any CSV file.  Copy and paste the code from below into the editor and click __"Save"__ then __"Review & Deploy"__ your changes.
+The __"Function Editor"__ dialog window opens.  Here we write the code to our function.  I have taken the liberty of writing the code for you.  This is on par with demo code, and needs to be enhanced and tested if you wish to have a truly robust method of loading in any CSV file. But, its a good start. Copy and paste the code from below into the editor and click __"Save"__ then __"Review & Deploy"__ your changes.
 
 ![function1](./img/function3.png)   
 

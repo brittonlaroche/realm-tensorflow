@@ -119,7 +119,7 @@ Copy and paste from the code below.  If you notice errors you should probably cu
 ```js
 exports = async function(arg_fileLocation, arg_database, arg_collection){
   // Example 
-  // exports("https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv","ItemDemo","FuelSales")
+  // exports("https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv","InventoryDemo","FuelSales")
   var sUrl = arg_fileLocation;
   var stage = context.services.get("mongodb-atlas").db(arg_database).collection(arg_collection);
   var count = 0;
@@ -174,7 +174,12 @@ async function parseCSV(csv, stage){
 ```
 
 The source code to the fucntion is available here on github under the HTML directory and in the link below:   
-https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/fnc_loadCSV.js   
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/fnc_loadCSV.js  
+
+Also notice that you can load your own CSV file by uploaing it into git hub and then gettin gthe link to the __"RAW"__ file.
+__NOTE: it has to be the RAW file or it won't load correctly!!!__
+
+https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv
 
 ## ![6](./img/6b.png) Connect to Realm from your Client   
 

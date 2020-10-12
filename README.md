@@ -340,7 +340,7 @@ Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If 
 ![function1](./img/hosting1.png)   
 
 ## ![8](./img/8b.png) Time to Play!
-A seocnd version of this example is here with a number of graphical elements.  This example uses tfvis to display graphs while the model is trained.    
+A second version of this example is here with a number of graphical elements.  This example uses tfvis to display graphs while the model is trained.    
 ![Auth2](./img/play1.png)   
 
 

@@ -322,7 +322,7 @@ When we click the __"Collections"__ button it should show us our __"InventoryDem
     
 ![Collection](./img/atlasCollection2.png)   
 
-Be sure to study the code as it is very simple but has all the elements in jsut a few lines of code.  Next we will use a more complex version in the link below.   
+Be sure to study the code as it is very simple but has all the elements in just a few lines of code.  Next we will use a more complex version in the link below.   
    
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   
    
@@ -340,8 +340,11 @@ Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If 
 ![function1](./img/hosting1.png)   
 
 ## ![8](./img/8b.png) Time to Play!
-
+A seocnd version of this example is here with a number of graphical elements.  This example uses tfvis to display graphs while the model is trained.    
 ![Auth2](./img/play1.png)   
 
-https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html
+
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   
+   
+Copy the contents of this file and save it as index.html. Change the following line to your app id, save and then double click this file to view it.   
 

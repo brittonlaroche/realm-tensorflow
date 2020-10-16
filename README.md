@@ -15,7 +15,9 @@ The following Hands on Lab will allow you to create your first machine learning 
 ## TensorFlow.js      
 
 ![TensorFlow](./img/tensorflowjsLogo.png)    
-TensorFlow.js is a library for machine learning in JavaScript. Develop ML models in JavaScript, and use ML directly in the browser.  The concept was started bythe wildly popular playground application. http://playground.tensorflow.org/   
+TensorFlow.js is a library for machine learning in JavaScript. Develop ML models in JavaScript, and use ML directly in the browser.  The concept was started by the wildly popular playground application. You can interact with the playground application by clicking the link below:   
+   
+http://playground.tensorflow.org/   
    
 The playground application allows you to build and train a neural network in your broswer.
    

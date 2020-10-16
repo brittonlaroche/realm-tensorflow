@@ -346,12 +346,20 @@ Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If 
 ## ![8](./img/8b.png) Time to Play!   
    
 A second version of this example is here with a number of graphical elements.   
-This example uses tfvis to display graphs while the model is trained.    
+This example uses tfvis to display graphs while the model is trained.   
+
+The udemy course I recommend is https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/learn/lecture/15381100#overview   
+This course allowed me to create the file below.
    
-![Auth2](./img/play1.png)   
+![Auth2](./img/play2.png)   
 
 
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   
    
-Copy the contents of this file and save it as index.html. Change the following line to your app id, save and then double click this file to view it.   
+Copy the contents of this file and save it as index.html.  Change the following line to your app id, save and then double click this file to view it.   
+
+
+```js
+const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+```
 

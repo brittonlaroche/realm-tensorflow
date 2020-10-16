@@ -351,7 +351,7 @@ This example uses tfvis to display graphs while the model is trained.
 The udemy course I recommend is https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/learn/lecture/15381100#overview   
 This course allowed me to create the file below.
    
-![Auth2](./img/play2.png)   
+![Auth2](./img/play3.png)   
 
 
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   

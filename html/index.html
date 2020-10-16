@@ -11,7 +11,7 @@
 <body>
 
 <script type="text/javascript">
-  const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+  const appId = "inventory-hhsot"; // Set Realm app ID here.
   let user;
   let app;
   let credentials;
@@ -88,7 +88,7 @@
     console.dir(items);
     var numDocs = items.length;
     document.getElementById("recordsLoaded").innerHTML = "Documents loaded from database: " + numDocs;
-    document.getElementById("model-status").innerHTML = `Data loaded from database, training is ready to begin.`;
+    document.getElementById("model-status").innerHTML = `Data loaded from database. Next, prepare the model and training is ready to begin.`;
     if (numDocs > 1){
       document.getElementById("prepare-model-button").disabled=false;
     } else {
@@ -176,19 +176,27 @@
       ['loss']
     );
     var numEpochs = parseInt(document.getElementById("numEpochs").value);
-    return model.fit(trainingFeatureTensor, trainingLabelTensor, {
+    if (document.getElementById("graphLoss").checked){
+      return model.fit(trainingFeatureTensor, trainingLabelTensor, {
+        batchSize: 32,
+        epochs: numEpochs,
+        validationSplit: 0.2,
+        callbacks: {
+          onEpochEnd,
+          onEpochBegin: async function () {
+            await plotPredictionLine();
+            const layer = model.getLayer(undefined, 0);
+            tfvis.show.layer({ name: "Layer 1" }, layer);
+          }
+        }
+      });
+    } else {
+      return model.fit(trainingFeatureTensor, trainingLabelTensor, {
       batchSize: 32,
       epochs: numEpochs,
-      validationSplit: 0.2,
-      callbacks: {
-        onEpochEnd,
-        onEpochBegin: async function () {
-          await plotPredictionLine();
-          const layer = model.getLayer(undefined, 0);
-          tfvis.show.layer({ name: "Layer 1" }, layer);
-        }
-      }
-    });
+      validationSplit: 0.2
+      });
+    }
   }
 
   async function predict () {
@@ -208,14 +216,28 @@
         const outputValue = outputTensor.dataSync()[0];
         const outputValueRounded = (outputValue/1000).toFixed(0)*1000;
         var yDataField = document.getElementById("yData").value;
-        document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
-          + `<span style="font-size: 2em">${outputValueRounded}</span>`;
+        var xDataField = document.getElementById("xData").value;
+        if (xDataField === "price"){
+          var totalSales = predictionInput * outputValueRounded;
+          document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
+            + `<span style="font-size: 2em">${outputValueRounded}</span><br>` 
+            + `for total sales of <br>`
+            + `<span style="font-size: 2em">\$${totalSales}</span><br>`  ;
+
+        } else {
+          document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
+            + `<span style="font-size: 2em">${outputValueRounded}</span>`;
+        }
       });
     }
   }
 
-  const storageID = "kc-house-price-regression";
+  const storageID = "realm-tensorflow-model";
   async function save () {
+    //I can't get model.save to work directly with a realm function
+    //so we have to save it to local storage
+    //const saveResults = await model.save(tf.io.browserHTTPRequest('https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/saveTFModel/incoming_webhook/SaveTFModelWH'));
+    //console
     const saveResults = await model.save(`localstorage://${storageID}`);
     document.getElementById("model-status").innerHTML = `Trained (saved ${saveResults.modelArtifactsInfo.dateSaved})`;
   }
@@ -348,7 +370,7 @@
 <!--   Header   -->
 <div class="section no-pad-bot" id="index-banner">
   <div class="container">
-    <h5 class="header center green-text small">Linear regression with MongoDB Atlas and TensorFlow.js</h5>
+    <h5 class="header center green-text small">Linear regression with MongoDB Atlas, Realm and TensorFlow.js</h5>
     <div class="row center">
       <h6 class="header col s12 light">Train a model to predict Gallons sold from Gas Price and Weather Data.</h6>
     </div>
@@ -413,7 +435,7 @@
         <div class="icon-block">
           <h3 class="center light-green-text">
               <i class="material-icons" style="font-size: 2em">filter_3</i>
-              <i class="material-icons" style="font-size: 2em">build</i>
+              <i class="material-icons" style="font-size: 2em">track_changes</i>
             </h3>
           <h5 class="center">Train & Test</h5>
 
@@ -426,6 +448,10 @@
             <p><label>Testing status:</label></p>
             <pre class="grey lighten-4" style="overflow-x: auto"><em id="testing-status">Not yet tested</em></pre>
             <label>Number of Epochs: <input type="text" id="numEpochs" value="100"/></label>
+            <label>
+              <input type="checkbox" id="graphLoss" checked/>
+              <span>Graph Loss</span>
+            </label>
             <button autocomplete="off" id="train-button" class="waves-effect light-green waves-light btn" disabled onclick="train()">Train New Model</button>
             <button autocomplete="off" id="test-button" class="waves-effect light-green waves-light btn" disabled onclick="test()">Test Model</button>
           </div>

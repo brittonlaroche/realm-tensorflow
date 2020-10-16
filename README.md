@@ -15,8 +15,10 @@ The following Hands on Lab will allow you to create your first machine learning 
 ## TensorFlow.js      
 
 ![TensorFlow](./img/tensorflowjsLogo.png)    
-TensorFlow.js is a library for machine learning in JavaScript. Develop ML models in JavaScript, and use ML directly in the browser   
-
+TensorFlow.js is a library for machine learning in JavaScript. Develop ML models in JavaScript, and use ML directly in the browser.  The concept was started bythe wildly popular playground application. http://playground.tensorflow.org/   
+   
+The playground application allows you to build and train a neural network in your broswer.
+   
 ## Getting Started
 This project uses Tensorflow.js, MongoDB Realm and Atlas to provide you with everything you need to create a cloud based machine learning platform with nothing more than a modern web browser, and the determination to begin with some good "old fashioned" human learning.  This short tutorial expects that you know nothing about MongoDB Atlas, Realm or Machine Learning with Google Tensorflow.    
 

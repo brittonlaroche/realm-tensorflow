@@ -339,6 +339,12 @@ const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ## ![7](./img/7b.png) Set up Hosting
 MomgoDB Realm allows you to host your application in a servelrss fashion.  You can upload your HTML files created in this lab and have them hosted on the web so you can send the link to others and they can see your project.  By default we provide a URL that can be mapped to your companies DNS the documentation on how to change the URL is provided in the hosting console.   
    
+Prepare all your files (firestVersion.html, secondVersion.html, and index.html)  by opening them and adding your application id to the following line:   
+   
+```js
+const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+```   
+   
 Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If necessary click the __"Enable Hosting"__ button.  Then click the __"Upload"__ button and select the index.html and firstVersion.html.  Then __"Review & Deploy"__ the application hosting changes.  You can now access your app at the url provided.
 
 ![function1](./img/hosting1.png)   
@@ -354,7 +360,7 @@ This course allowed me to create the file below.
 ![TFVis](./img/play3.png)   
 
 
-https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/secondVersion.html   
    
 Copy the contents of this file and save it as index.html.  Change the following line to your app id, save and then double click this file to view it.   
 
@@ -362,4 +368,8 @@ Copy the contents of this file and save it as index.html.  Change the following 
 ```js
 const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ```
+
+## ![9](./img/8b.png) Save the model data after training
+   
+Now that we have spent the time to train our models it would be great to be able to save them, not just locally but to MongoDB Atlas to share our models with everyone, so they could use or models to make predictions with out having to spend all the time we did training them.
 

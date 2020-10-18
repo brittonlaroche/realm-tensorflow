@@ -284,7 +284,7 @@
  async function sendJsonModel ( fileName, inputDoc ) {
         var txt = "";
         var httpVerb = 'POST';
-        var webhook_url = 'https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/saveTFModel/incoming_webhook/SaveTFModelWH';
+        var webhook_url = 'YOUR-SAVE-MODEL-WEBHOOK';
         console.log("sendJsonModel filename: " + fileName);
         console.dir(inputDoc);
         inputDoc["storageID"] = `${storageID}`;
@@ -308,7 +308,7 @@
   async function getJsonModel(fileName){
         var txt = "";
         var httpVerb = 'POST';
-        var webhook_url = 'https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/getTFModel/incoming_webhook/getTFModelWH';
+        var webhook_url = 'YOUR-RETRIEVE-MODEL-WEBHOOK';
         console.log("getJsonModel filename: " + fileName);
         var inputDoc = `{"fileName":"${fileName}"}`;
         sendDoc = JSON.stringify(inputDoc);

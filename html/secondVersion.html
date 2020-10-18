@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+  ==============================================================================================================================
+  - Date:       Author:           Version:     Notes:
+  ------------------------------------------------------------------------------------------------------------------------------
+  - 2020-02-15  Justin Emery      1.0          https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/
+  -                                            https://github.com/tech-courses/tensorflowjs-course-solutions
+  - 2020-10-15  Britton LaRoche   2.0          Added in MongoDB Atlas and Realm Fucntionality to store and retrieve training 
+  -                                            data from MongoDB
+  -
+  ==============================================================================================================================
+  -->
+  <title>TensorFlow.js linear regression</title>
+  <script src="https://unpkg.com/realm-web@0.9.0/dist/bundle.iife.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<script type="text/javascript">
+  const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+  let user;
+  let app;
+  let credentials;
+  let mongo;
+  let items;
+  const appConfig = {
+    id: appId,
+    timeout: 1000,
+  };
+  async function init(){
+    try{
+      await atlasConnect();
+    } finally {
+      console.log("Init Complete");
+    }
+  }
+  async function atlasConnect(){
+      app = new Realm.App(appConfig);
+      credentials = Realm.Credentials.anonymous(); // create an anonymous credential
+      user = await app.logIn(credentials);
+      console.dir(user);
+      mongo = app.services.mongodb("mongodb-atlas");
+  }
+  async function plot(pointsArray, featureName, predictedPointsArray = null) {
+    const values = [pointsArray.slice(0, 1000)];
+    const series = ["original"];
+    var graphName = document.getElementById("graphName").value;
+    var xDataField = document.getElementById("xData").value;
+    var yDataField = document.getElementById("yData").value;
+    if (Array.isArray(predictedPointsArray)) {
+      values.push(predictedPointsArray);
+      series.push("predicted");
+    }
+    tfvis.render.scatterplot(
+      { name: `${graphName}` },
+      { values, series },
+      {
+        xLabel: xDataField,
+        yLabel: yDataField,
+        height: 300,
+      }
+    )
+  }
+  async function graphDbData(){
+    if( items ){
+        if (items.length < 1 ){
+            loadDbData();
+        }
+    } else {
+        //we have no items
+        loadDbData();
+    }
+    points = [];
+    var xDataField = document.getElementById("xData").value;
+    var yDataField = document.getElementById("yData").value;
+    var numDocs = items.length;
+    for  (i=0;i<numDocs;i++){
+      points[i] = {x: items[i][`${xDataField}`], y: items[i][`${yDataField}`]};
+    }
+    if(points.length % 2 !== 0) { // If odd number of elements
+      points.pop(); // remove one element
+    }
+    tf.util.shuffle(points);
+    plot(points, xDataField);
+  }
+  async function loadDbData(){
+    var destDatabase = document.getElementById("loadDatabase").value;
+    var destCollection = document.getElementById("loadCollection").value;
+    var storeId = parseFloat(document.getElementById("searchStoreId").value);
+    const db = mongo.db(destDatabase);
+    const coll = db.collection(destCollection);
+    items = await coll.find({"store": storeId});
+    console.log("Items Length: " + items.length);
+    console.dir(items);
+    var numDocs = items.length;
+    document.getElementById("recordsLoaded").innerHTML = "Documents loaded from database: " + numDocs;
+    document.getElementById("model-status").innerHTML = `Data loaded from database. Next, prepare the model and training is ready to begin.`;
+    if (numDocs > 1){
+      document.getElementById("prepare-model-button").disabled=false;
+    } else {
+      document.getElementById("prepare-model-button").disabled=true;
+    }
+  }
+  async function loadCSVData(){
+    var csvUrl = document.getElementById("loadCSVUrl").value;
+    var destDatabase = document.getElementById("loadDatabase").value;
+    var destCollection = document.getElementById("loadCollection").value;
+    result = await user.functions.fnc_loadCSV(csvUrl,destDatabase,destCollection);
+    console.dir(result);
+    document.getElementById("recordsLoaded").innerHTML = "Records Loaded into database: " + result;
+  }
+  async function plotPredictionLine () {
+    const [xs, ys] = tf.tidy(() => {
+      const normalizedXs = tf.linspace(0, 1, 100);
+      const normalizedYs = model.predict(normalizedXs.reshape([100, 1]));
+
+      const xs = denormalize(normalizedXs, normalizedFeature.min, normalizedFeature.max);
+      const ys = denormalize(normalizedYs, normalizedLabel.min, normalizedLabel.max);
+
+      return [ xs.dataSync(), ys.dataSync() ];
+    });
+
+    const predictedPoints = Array.from(xs).map((val, index) => {
+      return { x: val, y: ys[index] };
+    });
+    var xDataField = document.getElementById("xData").value;
+    await plot(points, xDataField, predictedPoints);
+  }
+
+  function normalize(tensor, previousMin = null, previousMax = null) {
+    const min = previousMin || tensor.min();
+    const max = previousMax || tensor.max();
+    const normalizedTensor = tensor.sub(min).div(max.sub(min));
+    return {
+      tensor: normalizedTensor,
+      min,
+      max
+    };
+  }
+
+  function denormalize(tensor, min, max) {
+    const denormalizedTensor = tensor.mul(max.sub(min)).add(min);
+    return denormalizedTensor;
+  }
+
+  let model;
+  function createModel () {
+    model = tf.sequential();
+
+    model.add(tf.layers.dense({
+      units: 10,
+      useBias: true,
+      activation: 'sigmoid',
+      inputDim: 1,
+    }));
+    model.add(tf.layers.dense({
+      units: 10,
+      useBias: true,
+      activation: 'sigmoid',
+    }));
+    model.add(tf.layers.dense({
+      units: 1,
+      useBias: true,
+      activation: 'sigmoid',
+    }));
+
+    //const myOptimizer = tf.train.adam();
+    const myOptimizer = 'adam';
+    //const myOptimizer = 'sgd';
+    model.compile({
+      loss: 'meanSquaredError',
+      optimizer: myOptimizer,
+    });
+
+    return model;
+  }
+
+  async function trainModel (model, trainingFeatureTensor, trainingLabelTensor) {
+
+    const { onBatchEnd, onEpochEnd } = tfvis.show.fitCallbacks(
+      { name: "Training Performance" },
+      ['loss']
+    );
+    var numEpochs = parseInt(document.getElementById("numEpochs").value);
+    if (document.getElementById("graphLoss").checked){
+      return model.fit(trainingFeatureTensor, trainingLabelTensor, {
+        batchSize: 32,
+        epochs: numEpochs,
+        validationSplit: 0.2,
+        callbacks: {
+          onEpochEnd,
+          onEpochBegin: async function () {
+            await plotPredictionLine();
+            const layer = model.getLayer(undefined, 0);
+            tfvis.show.layer({ name: "Layer 1" }, layer);
+          }
+        }
+      });
+    } else {
+      return model.fit(trainingFeatureTensor, trainingLabelTensor, {
+      batchSize: 32,
+      epochs: numEpochs,
+      validationSplit: 0.2
+      });
+    }
+  }
+
+  async function predict () {
+    const predictionInput = parseFloat(document.getElementById("prediction-input").value);
+    if (isNaN(predictionInput)) {
+      alert("Please enter a valid number");
+    }
+    else if (predictionInput < 0.01) {
+      alert("Please enter a value above 0.01");
+    }
+    else {
+      tf.tidy(() => {
+        const inputTensor = tf.tensor1d([predictionInput]);
+        const normalizedInput = normalize(inputTensor, normalizedFeature.min, normalizedFeature.max);
+        const normalizedOutputTensor = model.predict(normalizedInput.tensor);
+        const outputTensor = denormalize(normalizedOutputTensor, normalizedLabel.min, normalizedLabel.max);
+        const outputValue = outputTensor.dataSync()[0];
+        const outputValueRounded = (outputValue/1000).toFixed(0)*1000;
+        var yDataField = document.getElementById("yData").value;
+        var xDataField = document.getElementById("xData").value;
+        if (xDataField === "price"){
+          var totalSales = predictionInput * outputValueRounded;
+          document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
+            + `<span style="font-size: 2em">${outputValueRounded}</span><br>` 
+            + `for total sales of <br>`
+            + `<span style="font-size: 2em">\$${totalSales}</span><br>`  ;
+
+        } else {
+          document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
+            + `<span style="font-size: 2em">${outputValueRounded}</span>`;
+        }
+      });
+    }
+  }
+
+  const storageID = "realm-tensorflow-model";
+  async function save () {
+    //I can't get model.save to work directly with a realm function
+    //so we have to save it to local storage
+    //const saveResults = await model.save(tf.io.browserHTTPRequest('https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/saveTFModel/incoming_webhook/SaveTFModelWH'));
+    //console
+    const saveResults = await model.save(`localstorage://${storageID}`);
+    document.getElementById("model-status").innerHTML = `Trained (saved ${saveResults.modelArtifactsInfo.dateSaved})`;
+  }
+
+  async function load () {
+    const storageKey = `localstorage://${storageID}`;
+    const models = await tf.io.listModels();
+    const modelInfo = models[storageKey];
+    if (modelInfo) {
+      model = await tf.loadLayersModel(storageKey);
+
+      tfvis.show.modelSummary({ name: "Model summary" }, model);
+      const layer = model.getLayer(undefined, 0);
+      tfvis.show.layer({ name: "Layer 1" }, layer);
+
+      await plotPredictionLine();
+
+      document.getElementById("model-status").innerHTML = `Trained (saved ${modelInfo.dateSaved})`;
+      document.getElementById("predict-button").removeAttribute("disabled");
+    }
+    else {
+      alert("Could not load: no saved model found");
+    }
+  }
+
+  async function test () {
+    const lossTensor = model.evaluate(testingFeatureTensor, testingLabelTensor);
+    const loss = (await lossTensor.dataSync())[0];
+    console.log(`Testing set loss: ${loss}`);
+
+    document.getElementById("testing-status").innerHTML = `Testing set loss: ${loss.toPrecision(5)}`;
+  }
+
+  async function train () {
+    // Disable all buttons and update status
+    ["train", "test", "load", "predict", "save"].forEach(id => {
+      document.getElementById(`${id}-button`).setAttribute("disabled", "disabled");
+    });
+    document.getElementById("model-status").innerHTML = "Training...";
+
+    const model = createModel();
+    tfvis.show.modelSummary({ name: "Model summary" }, model);
+    const layer = model.getLayer(undefined, 0);
+    tfvis.show.layer({ name: "Layer 1" }, layer);
+    await plotPredictionLine();
+
+    const result = await trainModel(model, trainingFeatureTensor, trainingLabelTensor);
+    console.log(result);
+    const trainingLoss = result.history.loss.pop();
+    console.log(`Training set loss: ${trainingLoss}`);
+    const validationLoss = result.history.val_loss.pop();
+    console.log(`Validation set loss: ${validationLoss}`);
+
+    document.getElementById("model-status").innerHTML = "Trained (unsaved)\n"
+      + `Loss: ${trainingLoss.toPrecision(5)}\n`
+      + `Validation loss: ${validationLoss.toPrecision(5)}`;
+    document.getElementById("test-button").removeAttribute("disabled");
+    document.getElementById("save-button").removeAttribute("disabled");
+    document.getElementById("predict-button").removeAttribute("disabled");
+  }
+
+  async function plotParams(weight, bias) {
+    model.getLayer(null, 0).setWeights([
+      tf.tensor2d([[weight]]), // Kernel (input multiplier)
+      tf.tensor1d([bias]), // Bias
+    ])
+    await plotPredictionLine();
+    const layer = model.getLayer(undefined, 0);
+    tfvis.show.layer({ name: "Layer 1" }, layer);
+  }
+
+  async function toggleVisor () {
+    tfvis.visor().toggle();
+  }
+
+  let points;
+  let normalizedFeature, normalizedLabel;
+  let trainingFeatureTensor, testingFeatureTensor, trainingLabelTensor, testingLabelTensor;
+  async function prepareModel () {
+    // Ensure backend has initialized
+    await tf.ready();
+
+    if( items ){
+        if (items.length < 1 ){
+            loadDbData();
+        }
+    } else {
+        //we have no items
+        loadDbData();
+    }
+    points = [];
+    var xDataField = document.getElementById("xData").value;
+    var yDataField = document.getElementById("yData").value;
+    var numDocs = items.length;
+    for  (i=0;i<numDocs;i++){
+      points[i] = {x: items[i][`${xDataField}`], y: items[i][`${yDataField}`]};
+    }
+    if(points.length % 2 !== 0) { // If odd number of elements
+      points.pop(); // remove one element
+    }
+    tf.util.shuffle(points);
+    plot(points, xDataField);
+
+    // Extract Features (inputs)
+    const featureValues = points.map(p => p.x);
+    const featureTensor = tf.tensor2d(featureValues, [featureValues.length, 1]);
+
+    // Extract Labels (outputs)
+    const labelValues = points.map(p => p.y);
+    const labelTensor = tf.tensor2d(labelValues, [labelValues.length, 1]);
+
+    // normalize features and labels
+    normalizedFeature = normalize(featureTensor);
+    normalizedLabel = normalize(labelTensor);
+    featureTensor.dispose();
+    labelTensor.dispose();
+
+    [trainingFeatureTensor, testingFeatureTensor] = tf.split(normalizedFeature.tensor, 2);
+    [trainingLabelTensor, testingLabelTensor] = tf.split(normalizedLabel.tensor, 2);
+
+    // Update status and enable train button
+    document.getElementById("model-status").innerHTML = "No model trained";
+    document.getElementById("train-button").removeAttribute("disabled");
+    document.getElementById("load-button").removeAttribute("disabled");
+  }
+
+  init();
+</script>
+
+<!--   Header   -->
+<div class="section no-pad-bot" id="index-banner">
+  <div class="container">
+    <h5 class="header center green-text small">Linear regression with MongoDB Atlas, Realm and TensorFlow.js</h5>
+    <div class="row center">
+      <h6 class="header col s12 light">Train a model to predict Gallons sold from Gas Price and Weather Data.</h6>
+    </div>
+  </div>
+</div>
+
+<!--   Misc buttons   -->
+<div class="section no-pad-bot light-green lighten-4">
+  <div class="container">
+    <div class="row center">
+      <button id="toggle-button" class="waves-effect waves-light light-green btn-small" onclick="toggleVisor()">Toggle Visor</button>
+      <br/><br/>
+    </div>
+  </div>
+</div>
+
+<!--   Main functionality   -->
+<div class="container">
+    <div class="section">
+  
+      <div class="row">
+        <!--   Load data from csv into MongoDB  -->
+        <div class="col s12 m6">
+          <div class="icon-block">
+            <h3 class="center light-green-text">
+                <i class="material-icons" style="font-size: 2em">filter_1</i>
+                <i class="material-icons" style="font-size: 2em">input</i>
+            </h3>
+            <h5 class="center">Load Sample Data</h5>
+  
+            <label>File URL: <input type="text" id="loadCSVUrl" value="https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv" placeholder=""/></label>
+            <label>Database: <input type="text" id="loadDatabase" value="InventoryDemo"/></label>
+            <label>Collection: <input type="text" id="loadCollection" value="FuelSales"/></label>
+            <label>Store ID: <input type="text" id="searchStoreId" value="101"/></label>
+            <button autocomplete="off" id="loadcsv-button" class="waves-effect light-green waves-light btn" onclick="loadCSVData()">Import CSV Data</button>
+            <button autocomplete="off" id="loaddb-button" class="waves-effect light-green waves-light btn" onclick="loadDbData()">Load Data From DB</button>
+            <p><strong id="recordsLoaded"></strong></p>
+          </div>
+        </div>
+        <!--   Plot data   -->
+        <div class="col s12 m6">
+          <div class="icon-block">
+            <h3 class="center light-green-text">
+                <i class="material-icons" style="font-size: 2em">filter_2</i>
+                <i class="material-icons" style="font-size: 2em">leaderboard</i>
+            </h3>
+            <h5 class="center">Prepare Model</h5>
+  
+            <label>Graph Name: <input type="text" id="graphName" value="Price vs Gallons Sold" placeholder=""/></label>
+            <label>X Data Field: <input type="text" id="xData" value="price"/></label>
+            <label>Y Data Field: <input type="text" id="yData" value="sales_quantity"/></label>
+            <button autocomplete="off" id="prepare-model-button" class="waves-effect light-green waves-light btn" disabled onclick="prepareModel()">Prepare Model</button>
+          </div>
+        </div>
+      </div>
+
+  <div class="section">
+
+    <div class="row">
+      <!--   Training   -->
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h3 class="center light-green-text">
+              <i class="material-icons" style="font-size: 2em">filter_3</i>
+              <i class="material-icons" style="font-size: 2em">track_changes</i>
+            </h3>
+          <h5 class="center">Train & Test</h5>
+
+          <p class="light"></p>
+
+          <div>
+            <p><label>Training status:</label></p>
+            <pre class="grey lighten-4" style="overflow-x: auto"><em id="model-status">Loading data...</em></pre>
+
+            <p><label>Testing status:</label></p>
+            <pre class="grey lighten-4" style="overflow-x: auto"><em id="testing-status">Not yet tested</em></pre>
+            <label>Number of Epochs: <input type="text" id="numEpochs" value="100"/></label>
+            <label>
+              <input type="checkbox" id="graphLoss" checked/>
+              <span>Graph Loss</span>
+            </label>
+            <button autocomplete="off" id="train-button" class="waves-effect light-green waves-light btn" disabled onclick="train()">Train New Model</button>
+            <button autocomplete="off" id="test-button" class="waves-effect light-green waves-light btn" disabled onclick="test()">Test Model</button>
+          </div>
+          <br/>
+
+          <div>
+            <button autocomplete="off" id="load-button" class="waves-effect light-green waves-light btn-small" disabled onclick="load()">Load Model</button>
+            <button autocomplete="off" id="save-button" class="waves-effect light-green waves-light btn-small" disabled onclick="save()">Save Model</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!--   Prediction   -->
+      <div class="col s12 m6">
+        <div class="icon-block">
+          <h3 class="center light-green-text">
+              <i class="material-icons" style="font-size: 2em">filter_4</i>
+              <i class="material-icons" style="font-size: 2em">timeline</i>
+          </h3>
+          <h5 class="center">Predict</h5>
+
+          <label>Independent Variable (price/temp): <input type="number" id="prediction-input" value="2.89"/></label>
+          <button autocomplete="off" id="predict-button" class="waves-effect light-green waves-light btn" disabled onclick="predict()">Predict Gallons Sold</button>
+          <p><strong id="prediction-output"></strong></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

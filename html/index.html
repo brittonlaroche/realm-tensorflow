@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--
+  ==============================================================================================================================
+  - Date:       Author:           Version:     Notes:
+  ------------------------------------------------------------------------------------------------------------------------------
+  - 2020-02-15  Justin Emery      1.0          https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/
+  -                                            https://github.com/tech-courses/tensorflowjs-course-solutions
+  - 2020-10-15  Britton LaRoche   2.0          Added in MongoDB Atlas and Realm Fucntionality to store and retrieve training 
+  -                                            data from MongoDB
+  - 2020-10-18  Britton LaRoche   2.1          Added ability to store and retrieve trained TensorFlow models in MongoDB Atlas
+  -
+  ==============================================================================================================================
+  -->
   <title>TensorFlow.js linear regression</title>
   <script src="https://unpkg.com/realm-web@0.9.0/dist/bundle.iife.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"></script>
@@ -11,12 +23,13 @@
 <body>
 
 <script type="text/javascript">
-  const appId = "inventory-hhsot"; // Set Realm app ID here.
+  const appId = "YOUR-APP-ID"; // Set Realm app ID here.
   let user;
   let app;
   let credentials;
   let mongo;
   let items;
+  var storageID = "realm-tensorflow-model";
   const appConfig = {
     id: appId,
     timeout: 1000,
@@ -83,12 +96,23 @@
     var storeId = parseFloat(document.getElementById("searchStoreId").value);
     const db = mongo.db(destDatabase);
     const coll = db.collection(destCollection);
-    items = await coll.find({"store": storeId});
+    var searchDoc = {};
+    if (storeId && storeId != ""){
+      searchDoc["store"] = storeId;
+      storageID = "realm-tensorflow-model-" + storeId;
+    } else {
+      storageID = "realm-tensorflow-model";
+    }
+    console.log("searchDoc: " +JSON.stringify(searchDoc));
+    items = await coll.find(searchDoc);
     console.log("Items Length: " + items.length);
     console.dir(items);
     var numDocs = items.length;
     document.getElementById("recordsLoaded").innerHTML = "Documents loaded from database: " + numDocs;
     document.getElementById("model-status").innerHTML = `Data loaded from database. Next, prepare the model and training is ready to begin.`;
+    ["train", "test", "load", "predict", "save", "addNotes"].forEach(id => {
+      document.getElementById(`${id}-button`).setAttribute("disabled", "disabled");
+    });
     if (numDocs > 1){
       document.getElementById("prepare-model-button").disabled=false;
     } else {
@@ -219,33 +243,130 @@
         var xDataField = document.getElementById("xData").value;
         if (xDataField === "price"){
           var totalSales = predictionInput * outputValueRounded;
-          document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
-            + `<span style="font-size: 2em">${outputValueRounded}</span><br>` 
-            + `for total sales of <br>`
-            + `<span style="font-size: 2em">\$${totalSales}</span><br>`  ;
+          document.getElementById("prediction-quantity").innerHTML = `${outputValueRounded}`;
+            document.getElementById("prediction-sales").innerHTML = `\$${totalSales}`  ;
 
         } else {
-          document.getElementById("prediction-output").innerHTML = `The predicted ${yDataField} is <br>`
-            + `<span style="font-size: 2em">${outputValueRounded}</span>`;
+          document.getElementById("prediction-quantity").innerHTML = `${outputValueRounded}`;
         }
+        document.getElementById("addNotes-button").disabled=false;
       });
     }
   }
-
-  const storageID = "realm-tensorflow-model";
   async function save () {
     //I can't get model.save to work directly with a realm function
     //so we have to save it to local storage
     //const saveResults = await model.save(tf.io.browserHTTPRequest('https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/saveTFModel/incoming_webhook/SaveTFModelWH'));
-    //console
+    //console.log("model");
+    //console.log("model: " + JSON.stringify(model));
+    console.dir(model);
     const saveResults = await model.save(`localstorage://${storageID}`);
     document.getElementById("model-status").innerHTML = `Trained (saved ${saveResults.modelArtifactsInfo.dateSaved})`;
-  }
 
+    // Retrieve the objects from storage that model.save just put there
+    var info = localStorage.getItem(`tensorflowjs_models/${storageID}/info`);
+    var weight_specs = localStorage.getItem(`tensorflowjs_models/${storageID}/weight_specs`);
+    var weight_data = localStorage.getItem(`tensorflowjs_models/${storageID}/weight_data`);
+    var model_topology = localStorage.getItem(`tensorflowjs_models/${storageID}/model_topology`);
+    var model_metadata = localStorage.getItem(`tensorflowjs_models/${storageID}/model_metadata`);
+    
+    //docs get converted in a funny way
+    //keep it simple, stuff everything in as a string value
+    var modelDoc = {};
+    modelDoc["info_value"] = info;
+    modelDoc["weight_specs_value"] = weight_specs;
+    modelDoc["weight_data_value"] = weight_data;
+    modelDoc["model_topology_value"] = model_topology;
+    modelDoc["model_metadata_value"] = model_metadata;
+    await sendJsonModel(`tensorflowjs_models/${storageID}/model`, modelDoc);
+
+  }
+ async function sendJsonModel ( fileName, inputDoc ) {
+        var txt = "";
+        var httpVerb = 'POST';
+        var webhook_url = 'https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/saveTFModel/incoming_webhook/SaveTFModelWH';
+        console.log("sendJsonModel filename: " + fileName);
+        console.dir(inputDoc);
+        inputDoc["storageID"] = `${storageID}`;
+        inputDoc["fileName"] = fileName; 
+        sendDoc = JSON.stringify(inputDoc);
+        //console.log(sendDoc);
+        //Check to see if we have an input document or not
+        if (sendDoc != "") {
+          response = await fetch(webhook_url, {
+            method: httpVerb,
+            body: sendDoc, // string or object
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+        } 
+        const myJson = await response.json(); //extract JSON from the http response
+        console.log("sendJsonModel result: " + JSON.stringify(myJson));
+        document.getElementById("save-status").innerHTML = "result for filename: " + fileName + JSON.stringify(myJson, undefined, 2);
+  }
+  async function getJsonModel(fileName){
+        var txt = "";
+        var httpVerb = 'POST';
+        var webhook_url = 'https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/getTFModel/incoming_webhook/getTFModelWH';
+        console.log("getJsonModel filename: " + fileName);
+        var inputDoc = `{"fileName":"${fileName}"}`;
+        sendDoc = JSON.stringify(inputDoc);
+        //console.log(sendDoc);
+        //Check to see if we have an input document or not
+        if (sendDoc != "") {
+          response = await fetch(webhook_url, {
+            method: httpVerb,
+            body: sendDoc, // string or object
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+        } 
+        const myJson = await response.json(); //extract JSON from the http response
+        //remove the attributes we used to package for shipping and storing in MongoDB
+        delete myJson.fileName;
+        delete myJson.storageID;
+        delete myJson._id;
+        //console.log("getJsonModel result: " + JSON.stringify(myJson));
+        return myJson;
+  }
+  async function loadModelFromDB(){
+    //This is all a work around because google tensorflow model.save() and model.load() does not work with the REST API
+    //I know, right? Like really? :(
+
+    var modelDoc = await getJsonModel(`tensorflowjs_models/${storageID}/model`);
+    
+    var info = modelDoc.info_value;
+    localStorage.removeItem(`tensorflowjs_models/${storageID}/info`);
+    localStorage.setItem(`tensorflowjs_models/${storageID}/info`, info);
+
+    var weight_specs = modelDoc.weight_specs_value;
+    localStorage.removeItem(`tensorflowjs_models/${storageID}/weight_specs`);
+    localStorage.setItem(`tensorflowjs_models/${storageID}/weight_specs`, weight_specs);
+
+    var weight_data = modelDoc.weight_data_value;
+    localStorage.removeItem(`tensorflowjs_models/${storageID}/weight_data`);
+    localStorage.setItem(`tensorflowjs_models/${storageID}/weight_data`, weight_data);
+
+    var model_topology = modelDoc.model_topology_value;
+    localStorage.removeItem(`tensorflowjs_models/${storageID}/model_topology`);
+    localStorage.setItem(`tensorflowjs_models/${storageID}/model_topology`, model_topology);
+
+    var model_metadata = modelDoc.model_metadata_value;
+    localStorage.removeItem(`tensorflowjs_models/${storageID}/model_metadata`);
+    localStorage.setItem(`tensorflowjs_models/${storageID}/model_metadata`, model_metadata);
+
+  }
   async function load () {
+    await loadModelFromDB();
     const storageKey = `localstorage://${storageID}`;
     const models = await tf.io.listModels();
+    console.log("load models: ");
+    console.dir(models);
     const modelInfo = models[storageKey];
+    console.log("load modelInfo: ");
+    console.dir(modelInfo);
     if (modelInfo) {
       model = await tf.loadLayersModel(storageKey);
 
@@ -277,6 +398,7 @@
       document.getElementById(`${id}-button`).setAttribute("disabled", "disabled");
     });
     document.getElementById("model-status").innerHTML = "Training...";
+    document.getElementById('progressbar').style.display = "block";
 
     const model = createModel();
     tfvis.show.modelSummary({ name: "Model summary" }, model);
@@ -297,6 +419,7 @@
     document.getElementById("test-button").removeAttribute("disabled");
     document.getElementById("save-button").removeAttribute("disabled");
     document.getElementById("predict-button").removeAttribute("disabled");
+    document.getElementById('progressbar').style.display = "none";
   }
 
   async function plotParams(weight, bias) {
@@ -363,6 +486,17 @@
     document.getElementById("train-button").removeAttribute("disabled");
     document.getElementById("load-button").removeAttribute("disabled");
   }
+  function addNotes(){
+    var quantity = document.getElementById("prediction-quantity").innerHTML;
+    var sales = document.getElementById("prediction-sales").innerHTML;
+    var storeId = document.getElementById("searchStoreId").value;
+    var inputVal = document.getElementById("prediction-input").value;
+    var notes = document.getElementById("notesField").innerHTML;
+
+    var setNote = notes + `${storeId}, ${inputVal},  ${quantity},  ${sales}<br>`;
+    document.getElementById("notesField").innerHTML = setNote;
+    document.getElementById("addNotes-button").disabled=true;
+  }
 
   init();
 </script>
@@ -381,7 +515,7 @@
 <div class="section no-pad-bot light-green lighten-4">
   <div class="container">
     <div class="row center">
-      <button id="toggle-button" class="waves-effect waves-light light-green btn-small" onclick="toggleVisor()">Toggle Visor</button>
+      <button id="toggle-button" class="waves-effect waves-light green darken-3 btn-small" onclick="toggleVisor()">Toggle Visor</button>
       <br/><br/>
     </div>
   </div>
@@ -405,8 +539,8 @@
             <label>Database: <input type="text" id="loadDatabase" value="InventoryDemo"/></label>
             <label>Collection: <input type="text" id="loadCollection" value="FuelSales"/></label>
             <label>Store ID: <input type="text" id="searchStoreId" value="101"/></label>
-            <button autocomplete="off" id="loadcsv-button" class="waves-effect light-green waves-light btn" onclick="loadCSVData()">Import CSV Data</button>
-            <button autocomplete="off" id="loaddb-button" class="waves-effect light-green waves-light btn" onclick="loadDbData()">Load Data From DB</button>
+            <button autocomplete="off" id="loadcsv-button" class="waves-effect green darken-3 waves-light btn" onclick="loadCSVData()">Import CSV Data</button>
+            <button autocomplete="off" id="loaddb-button" class="waves-effect green darken-3 waves-light btn" onclick="loadDbData()">Load Data From DB</button>
             <p><strong id="recordsLoaded"></strong></p>
           </div>
         </div>
@@ -422,7 +556,7 @@
             <label>Graph Name: <input type="text" id="graphName" value="Price vs Gallons Sold" placeholder=""/></label>
             <label>X Data Field: <input type="text" id="xData" value="price"/></label>
             <label>Y Data Field: <input type="text" id="yData" value="sales_quantity"/></label>
-            <button autocomplete="off" id="prepare-model-button" class="waves-effect light-green waves-light btn" disabled onclick="prepareModel()">Prepare Model</button>
+            <button autocomplete="off" id="prepare-model-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="prepareModel()">Prepare Model</button>
           </div>
         </div>
       </div>
@@ -452,14 +586,17 @@
               <input type="checkbox" id="graphLoss" checked/>
               <span>Graph Loss</span>
             </label>
-            <button autocomplete="off" id="train-button" class="waves-effect light-green waves-light btn" disabled onclick="train()">Train New Model</button>
-            <button autocomplete="off" id="test-button" class="waves-effect light-green waves-light btn" disabled onclick="test()">Test Model</button>
+            <button autocomplete="off" id="train-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="train()">Train New Model</button>
+            <button autocomplete="off" id="test-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="test()">Test Model</button>
           </div>
           <br/>
-
+          <div id="progressbar" class="progress" style="display:none">
+            <div class="indeterminate green darken-3"></div>
+          </div>
           <div>
-            <button autocomplete="off" id="load-button" class="waves-effect light-green waves-light btn-small" disabled onclick="load()">Load Model</button>
-            <button autocomplete="off" id="save-button" class="waves-effect light-green waves-light btn-small" disabled onclick="save()">Save Model</button>
+            <button autocomplete="off" id="load-button" class="waves-effect green darken-3 waves-light btn-small" disabled onclick="load()">Load Model</button>
+            <button autocomplete="off" id="save-button" class="waves-effect green darken-3 waves-light btn-small" disabled onclick="save()">Save Model</button>
+            <br><pre class="grey lighten-4" style="overflow-x: auto"><em id="save-status"></em></pre>
           </div>
 
         </div>
@@ -475,14 +612,21 @@
           <h5 class="center">Predict</h5>
 
           <label>Independent Variable (price/temp): <input type="number" id="prediction-input" value="2.89"/></label>
-          <button autocomplete="off" id="predict-button" class="waves-effect light-green waves-light btn" disabled onclick="predict()">Predict Gallons Sold</button>
-          <p><strong id="prediction-output"></strong></p>
+          <button autocomplete="off" id="predict-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="predict()">Predict Gallons Sold</button>
+          <button autocomplete="off" id="addNotes-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="addNotes()">Add Notes</button>
+          <p>Predicted quantity: <span style="font-size: 2em"><strong id="prediction-quantity"></strong></span></p>
+          <p>Predicted Sales: <span style="font-size: 2em"><strong id="prediction-sales"></strong></span></p>
+             <div class="card green darken-3"> 
+              <div class="card-content white-text">
+                <span class="card-title">Notes</span>
+                <p id="notesField">Press the "Add Notes" button to keep track of important data<br></p>
+              </div>
+             </div>
         </div>
       </div>
     </div>
 
   </div>
 </div>
-
 </body>
 </html>

@@ -44,7 +44,7 @@ MongoDB is the one of the best databases for machine learning for a number of re
          
 Once the data is loaded, MongoDB provides you with a powerful query language and indexes to give you fast access to very specific values that you would want to use. What is more with MongoDB Atlas you can create a free tier in any of the major cloud providers (AWS, GCP and Azure) in just 7 minutes. But don't take my word for it, in the next few sections you will literally see for yourself.   
 
-The final reason MongoDb is a great fit for machine learning is its the perfect place to store, share and retrieve your trained models.  We will not only store our models, but keep a history of our models in the database allowing us to restore a trained model from a previous version if we chose to do so.  Completeing this git hub will allow you to create a simple triiger to store a copy of your model in a history collection, and see how easy it is to keep a hsitroy of your trained mdoels over time inside MongoDB.   
+The final reason MongoDB is a great fit for machine learning is its the perfect place to store, share and retrieve your trained models.  We will not only store our models, but keep a history of our models in the database allowing us to restore a trained model from a previous version if we chose to do so.  Completeing this git hub will allow you to create a simple triiger to store a copy of your model in a history collection, and see how easy it is to keep a hsitroy of your trained mdoels over time inside MongoDB.   
 
 ![1](./img/mongoDBAtlas.png)   
    

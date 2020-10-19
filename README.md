@@ -369,7 +369,10 @@ Copy the contents of this file and save it as index.html.  Change the following 
 const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ```
 
-## ![9](./img/8b.png) Save the model data after training
+## ![9](./img/9b.png) Save the model data after training
    
 Now that we have spent the time to train our models it would be great to be able to save them, not just locally but to MongoDB Atlas to share our models with everyone, so they could use or models to make predictions with out having to spend all the time we did training them.
+
+## ![10](./img/10b.png) Create a trigger to keep a history of the models
+
 

@@ -352,16 +352,18 @@ When we click the __"Collections"__ button it should show us our __"InventoryDem
     
 ![Collection](./img/atlasCollection2.png)   
 
-Be sure to study the code as it is very simple but has all the elements in just a few lines of code.  Next we will use a more complex version in the link below.   
-   
+Be sure to study the code as it is very simple but has all the elements in just a few lines of code.  Next we will use a more complex version in the links below.   
+
+https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/secondVersion.html   
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html   
    
-Copy the contents of this file and save it as index.html. Change the following line to your app id, save and then double click this file to view it.   
+Copy the contents of these file and save it as secondVersion.html and index.html respectively. Change the following line (around line 26) to your app id.  Your application ID is the ID we copied in step 2:   
 
 ```js
 const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ```
-   
+Save the files and then double click each file to view it.   
+
 ![end](./img/section-end.png)   
    
     

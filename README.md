@@ -504,4 +504,22 @@ Open the index.html file amd replace the following code __'YOUR-RETRIEVE-MODEL-W
     
 ## ![10](./img/10b.png) Create a trigger to keep a history of the models
 
+
+Paste the following function code into the function editor of the trigger:   
+```js
+exports = function(changeEvent) {
+  const history = context.services.get("mongodb-atlas").db("InventoryDemo").collection("tfModel_hist");
+  const fullDocument = changeEvent.fullDocument;
+  
+  var fullCopy = fullDocument;
+  fullCopy.parent_id = fullDocument._id;
+  delete fullCopy._id;
+  
+  history.insertOne(fullCopy);
+
+};
+```   
+   
 ![trigger](./img/trigger1.png)  
+
+

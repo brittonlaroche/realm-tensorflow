@@ -35,13 +35,19 @@ I highly recommend watching the followng 3 videos, about 7 minutes each.  It wil
 
 I also recommend a Udemy course for some deeper learning and good examples and place a link in the final part of this lab.
 
+   
+![end](./img/section-end.png)   
+   
+    
 ## Why MongoDB?
 MongoDB is the one of the best databases for machine learning for a number of reasons.  The first reason is that MongoDB has a flexible schema, unlike a relational database where you have to define a schema and tables with column definitions, MongoDB allows you to load data directly with out any upfront schema design.  This means that you can load data form any new source and get to work immediately.    
          
 Once the data is loaded, MongoDB provides you with a powerful query language and indexes to give you fast access to very specific values that you would want to use. What is more with MongoDB Atlas you can create a free tier in any of the major cloud providers (AWS, GCP and Azure) in just 7 minutes. But don't take my word for it, in the next few sections you will literally see for yourself.   
 
 ![1](./img/mongoDBAtlas.png)   
-    
+   
+![end](./img/section-end.png)   
+       
 
 ## ![1](./img/1b.png) Create an Atlas Cluster
 Our first step is to create an atlas cluster. Create a free tier cluster known as an M0.     
@@ -65,7 +71,10 @@ Now we get a dialog to select the type of cluster we want.  Lets go with __"Shar
 Notice that you can deploy in any of the three major cloud providers (AWS, GCP or Azure).  I went with AWS and the default region. __BE SURE TO CREATE ATLAS VERSION 4.4__   Select version 4.4 from the list of availble versions of Atlas.  Then click the __"Create Cluster"__ button on the bottom right.   
    
 ![Atlas](./img/Atlas5.png)   
-
+   
+![end](./img/section-end.png)   
+   
+    
 
 ## ![2](./img/2b.png) Create a Realm Application
 Our second step is to create a Realm application.  MongoDB Realm has a number of very cool features. We will be focused on the Realm browser SDK that allows you to connect to MongoDB Atlas through the web browser.  Additionally we will be creating a Realm function that loads data from a CSV file into MongoDB Atlas.  This is imporatnt because once the data is in MongoDB, you can search and filter for specific fields and criteria that make feeding your machine learning model much easier and far more precise.  MongoDB's flexible data model allows you to load data from any CSV file directly into the database with out any need to model the data first.  This project showcases how easy it is to do machine learning with MongoDB.
@@ -85,7 +94,10 @@ The application guide pops up, you can close guides or select __"WebSDK"__ as we
 Take note of the __"App Id"__ circled in red.  Press the copy icon and paste this into your notes for future use.  You can return to this screen at any time in the future.  Notice the guides check list, we will be covering this list next.   
    
 ![realm4](./img/createRealmApp4.png)   
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![3](./img/3b.png) Configure a Collection
 In order to insert data into Atlas we have to configure Realm rules that allow our browser SDK connect.  But first we have to prepare authorization to connect to a specific database and collection.  Lets begin by selecting the __"Rules"__ menu item on the left navigation pane of the Realm console as seen below.  This will bring up a dialog asking us to add a collection.  Click the __"Add Collection"__ button.   
    
@@ -98,7 +110,10 @@ In the add new collection dialog we will be creating authorzation rules for a ne
 Now we are ready to define the read and write rules for the __"FuelSales"__ collection.  Click the __"Write"__ check box, and it will add the read permission automatically. Press the __"Save"__ button and then __"Review & Deploy"__ your changes.   
    
 ![collection4](./img/configColl4.png)   
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![4](./img/4b.png) Set up Application Authentication   
 We have given specific authorization rules to a databse collection in the step above.  Now we need to provide an Authentication mechanism for our application.  The easiest way to get started is to allow users to log in Anonymously.  This is accomplised by selecting the __"Authentication"__ menu item from the left navigation pane of the Realm console as seen below.  We can see that the __"Allow users to log in anonymously"__ option has the enabled parameter set to off.  Click the edit button to chnage this value.   
    
@@ -107,7 +122,10 @@ We have given specific authorization rules to a databse collection in the step a
 The provider enabled / disabled dialog window appears.  Toggle the permission to __"ON"__ and press the __"Save"__ button to the changes and then remember to __"Review & Deploy"__ your changes.  
    
 ![Auth2](./img/authenticate2.png)   
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![5](./img/5b.png) Create a function   
 We have created authorization rules for a database collection and set up authentication.  We are now ready to write our first application function.  Begin by selecting the __"Funtions"__ menu item from the left naviagtion pane of the Realm console. Click the __"Create New Function"__ button.
    
@@ -188,7 +206,10 @@ Also notice that you can load your own CSV file by uploaing it into git hub and 
 __NOTE: it has to be the RAW file or it won't load correctly!!!__
 
 https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![6](./img/6b.png) Connect to Realm from your Client   
 
 We are now ready to create our first machine learning application.  In the code below we see that we are including two main javascript libraries that have all the fuctions we need. One is for Mongo DB Realm and the other is for Tensorflow.    
@@ -338,7 +359,10 @@ Copy the contents of this file and save it as index.html. Change the following l
 ```js
 const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ```
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![7](./img/7b.png) Set up Hosting
 MomgoDB Realm allows you to host your application in a servelrss fashion.  You can upload your HTML files created in this lab and have them hosted on the web so you can send the link to others and they can see your project.  By default we provide a URL that can be mapped to your companies DNS the documentation on how to change the URL is provided in the hosting console.   
    
@@ -351,7 +375,10 @@ const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If necessary click the __"Enable Hosting"__ button.  Then click the __"Upload"__ button and select the index.html and firstVersion.html.  Then __"Review & Deploy"__ the application hosting changes.  You can now access your app at the url provided.
 
 ![function1](./img/hosting1.png)   
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![8](./img/8b.png) Time to Play!   
    
 A second version of this example is here with a number of graphical elements.   
@@ -371,11 +398,17 @@ Copy the contents of this file and save it as index.html.  Change the following 
 ```js
 const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ```
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![9](./img/9b.png) Save the model data after training
    
 Now that we have spent the time to train our models it would be great to be able to save them, not just locally but to MongoDB Atlas to share our models with everyone, so they could use or models to make predictions with out having to spend all the time we did training them.
-
+   
+![end](./img/section-end.png)   
+   
+    
 ## ![10](./img/10b.png) Create a trigger to keep a history of the models
 
 

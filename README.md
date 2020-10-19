@@ -405,10 +405,103 @@ const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ## ![9](./img/9b.png) Save the model data after training
    
 Now that we have spent the time to train our models it would be great to be able to save them, not just locally but to MongoDB Atlas to share our models with everyone, so they could use or models to make predictions with out having to spend all the time we did training them.
+
+To save the model we need to create a webhook, a REST API endpoint to send a JSON document to MongoDB.  Click the __"3RD Party Services"__ menu item on the left navigation pane of the realm console.    
+    
+### Save TF Model Web Hook   
    
+![Save Web Hook](./img/SaveTFModelWH.png)   
+   
+   
+```js
+// This function is the webhook's request handler.
+exports = async function(payload, response) {
+  /*===============================================================
+  - Date:       Author:           Version:        Notes:
+  -----------------------------------------------------------------
+  - 2020-10-15  Britton LaRoche   1.0            Initial Release
+  -
+  ===============================================================*/
+    // Data can be extracted from the request as follows:
+    console.log(JSON.stringify("SaveTFModelWH called ... executing..." ));
+    var model = context.services.get("mongodb-atlas").db("InventoryDemo").collection("tfModel");
+    var body = {};
+    var result = {};
+    if (payload.body) {
+      console.log(JSON.stringify(payload.body));
+      body = EJSON.parse(payload.body.text());
+      console.log("body: " + JSON.stringify(body));
+      var myFileName = body.fileName;
+      if (myFileName) {
+        //remove the old model data
+        await model.deleteMany({"fileName":myFileName});
+      } else {
+        return {"error":"unable to store tensorflow model without fileName"};
+      }
+      result = await model.insertOne(body);
+      console.log(JSON.stringify("return document" ));
+      console.log(JSON.stringify(result));
+    } else {
+      console.log(JSON.stringify("No payload body." ));
+      const payloadText = JSON.stringify(payload);
+      model.insertOne({"payload": payloadText});
+    }
+    return  result; 
+};
+```
+   
+### Get TF Model Web Hook
+   
+```js
+// This function is the webhook's request handler.
+exports = async function(payload, response) {
+  /*===============================================================
+  - Date:       Author:           Version:        Notes:
+  -----------------------------------------------------------------
+  - 2020-10-15  Britton LaRoche   1.0            Initial Release
+  -
+  ===============================================================*/
+    // Data can be extracted from the request as follows:
+    console.log(JSON.stringify("getTFModelWH called ... executing..." ));
+    var model = context.services.get("mongodb-atlas").db("InventoryDemo").collection("tfModel");
+    var body = {};
+    var result = {};
+    if (payload.body) {
+      console.log(JSON.stringify(payload.body));
+      body = EJSON.parse(payload.body.text());
+      console.log("body: " + JSON.stringify(body));
+      var bodyDoc = JSON.parse(body);
+      console.log("bodyDoc: " + JSON.stringify(bodyDoc));
+      var myFileName = bodyDoc.fileName;
+      if (myFileName) {
+        console.log("fileName: " + myFileName);
+      } else {
+        return {"error":"unable to retrieve tensorflow model without fileName"};
+      }
+      result = await model.findOne({"fileName": myFileName});
+      console.log(JSON.stringify("return document" ));
+      console.log(JSON.stringify(result));
+    } else {
+      console.log(JSON.stringify("No payload body." ));
+    }
+    return  result; 
+};
+
+```
+
+Open the index.html file amd replace the following code __'YOUR-SAVE-MODEL-WEBHOOK"__ with the __"WebHook URL"__ you copied by clicking the copy icon into the index.html page around line 287.
+```js
+        var webhook_url = 'YOUR-SAVE-MODEL-WEBHOOK';
+```   
+
+Open the index.html file amd replace the following code __'YOUR-RETRIEVE-MODEL-WEBHOOK"__ with the __"WebHook URL"__ you copied by clicking the copy icon into the index.html page around line 311.
+```js
+        var webhook_url = 'YOUR-RETRIEVE-MODEL-WEBHOOK';
+```   
+
 ![end](./img/section-end.png)   
    
     
 ## ![10](./img/10b.png) Create a trigger to keep a history of the models
 
-
+![trigger](./img/trigger1.png)  

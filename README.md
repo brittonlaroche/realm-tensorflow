@@ -88,7 +88,19 @@ Now we get a dialog to select the type of cluster we want.  Lets go with __"Shar
 Notice that you can deploy in any of the three major cloud providers (AWS, GCP or Azure).  I went with AWS and the default region. __BE SURE TO CREATE ATLAS VERSION 4.4__   Select version 4.4 from the list of availble versions of Atlas.  Then click the __"Create Cluster"__ button on the bottom right.   
    
 ![Atlas](./img/Atlas5.png)   
-   
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+     
 ![end](./img/section-end.png)   
    
     
@@ -112,6 +124,19 @@ Take note of the __"App Id"__ circled in red.  Press the copy icon and paste thi
    
 ![realm4](./img/createRealmApp4.png)   
    
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+   
 ![end](./img/section-end.png)   
    
     
@@ -127,6 +152,19 @@ In the add new collection dialog we will be creating authorzation rules for a ne
 Now we are ready to define the read and write rules for the __"FuelSales"__ collection.  Click the __"Write"__ check box, and it will add the read permission automatically. Press the __"Save"__ button and then __"Review & Deploy"__ your changes.   
    
 ![collection4](./img/configColl4.png)   
+   
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
    
 ![end](./img/section-end.png)   
    
@@ -223,6 +261,19 @@ Also notice that you can load your own CSV file by uploaing it into git hub and 
 __NOTE: it has to be the RAW file or it won't load correctly!!!__
 
 https://raw.githubusercontent.com/brittonlaroche/realm-tensorflow/main/data/fuel_sales_price.csv
+   
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
    
 ![end](./img/section-end.png)   
    
@@ -378,6 +429,19 @@ Copy the contents of these file and save it as secondVersion.html and index.html
 const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 ```
 Save the files and then double click each file to view it.   
+   
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
 
 ![end](./img/section-end.png)   
    

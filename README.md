@@ -178,6 +178,19 @@ The provider enabled / disabled dialog window appears.  Toggle the permission to
    
 ![Auth2](./img/authenticate2.png)   
    
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+   
 ![end](./img/section-end.png)   
    
     
@@ -458,7 +471,20 @@ const appId = "YOUR-APP-ID"; // Set Realm app ID here.
 Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If necessary click the __"Enable Hosting"__ button.  Then click the __"Upload"__ button and select the index.html and firstVersion.html.  Then __"Review & Deploy"__ the application hosting changes.  You can now access your app at the url provided.
 
 ![function1](./img/hosting1.png)   
-   
+    
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+    
 ![end](./img/section-end.png)   
    
     
@@ -480,7 +506,19 @@ https://your-app-id.mongodbstitch.com/secondVersion.html
 
 When you open the file you should be able to play with the data and train the model by adding more epochs.  Watch what happens when you run the model for 1,000 epochs.  You should see the prediction line begin to match the data.
  
-
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+    
 ![end](./img/section-end.png)   
    
     
@@ -591,7 +629,19 @@ Open the index.html file amd replace the following code __'YOUR-RETRIEVE-MODEL-W
 ```js
         var webhook_url = 'YOUR-RETRIEVE-MODEL-WEBHOOK';
 ```   
-
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+   
 ![end](./img/section-end.png)   
    
     
@@ -620,5 +670,17 @@ exports = function(changeEvent) {
 ```   
    
 ![trigger](./img/trigger1.png)  
-
+   
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
 

@@ -12,6 +12,10 @@ The following Hands on Lab will allow you to create your first machine learning 
 6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
 7. [Set up Hosting](#-set-up-hosting)
 8. [Time to Play](#-time-to-play)
+9. [Save the model after training](#-save-the-model-data-after-training)
+10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+
+# Overview
 
 | Why TensorFlow?       | 
 |-----------------------|

@@ -409,12 +409,19 @@ When you open the file you should be able to play with the data and train the mo
    
 Now that we have spent the time to train our models it would be great to be able to save them, not just locally but to MongoDB Atlas to share our models with everyone, so they could use or models to make predictions with out having to spend all the time we did training them.
 
-To save the model we need to create a webhook, a REST API endpoint to send a JSON document to MongoDB.  Click the __"3RD Party Services"__ menu item on the left navigation pane of the realm console.    
+To save the model we need to create a webhook, a REST API endpoint to send a JSON document to MongoDB.  Click the __"3RD Party Services"__ menu item on the left navigation pane of the realm console.  Add a new service and name it __"saveTFModel"__.  Next create the webhook and name it __"SaveTFModelWH"__.  Make sure the webhook runs as system, so we don't have to configure any rules for the collection.   
+   
+You can decide to log function arguments by toggling the control to __"ON"__ and its a good idea when testing the function for the first time.  Take note of the webhook URL and copy it for future use in the index.html.   
+   
+The HTTP Method will be __"POST"__ as we will be sending the model as a JSON document.
+
+Be sure to __"Respond With Result"__ by toggling this paramter to ON, so that we can be sure the model was saved to Atlas. 
     
 ### Save TF Model Web Hook   
    
 ![Save Web Hook](./img/SaveTFModelWH.png)   
-   
+    
+Now we need to make sure we add the function for the Webhook's request editor.  Once teh webhook is saved the function editor should appear.  You can always get to the function editor by pressing the __"Function Editor"__ tab right next to the __"Settings Tab"__.   
    
 ```js
 // This function is the webhook's request handler.
@@ -451,8 +458,9 @@ exports = async function(payload, response) {
     }
     return  result; 
 };
-```
+```   
    
+
 ### Get TF Model Web Hook
    
 ```js

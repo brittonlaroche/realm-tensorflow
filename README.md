@@ -2,6 +2,17 @@
 
 The following Hands on Lab will allow you to create your first machine learning program with nothing more than a text editor and a browser.  Depending on your familiarity with MongoDB and basic coding, the lab can be anywhere from 60 to 90 minutes in total. I chose MongoDB and Tensorflow for the ease of setup, flexibility and full set of features. Buckle up, its a fun ride!  
 
+## Tutorial Contents 
+[Overview](#-overview)
+1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
+2. [Create a Realm Application](#-create-a-realm-application)
+3. [Configure a Collection](#-configure-a-collection)
+4. [Set up Application Authentication](#-set-up-application-authentication)
+5. [Create a Function](#-create-a-function)
+6. [Connect to Realm from your client](#-connect-to-realm-from-your-client)
+7. [Set up Hosting](#-set-up-hosting)
+8. [Time to Play](#-time-to-play)
+
 | Why TensorFlow?       | 
 |-----------------------|
 |![TensorFlow](./img/tfLogo2.png)    | 

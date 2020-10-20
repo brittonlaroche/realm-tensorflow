@@ -385,8 +385,7 @@ Begin by selecting the __"Hosting"__ menu item on the left navigation pane.  If 
     
 ## ![8](./img/8b.png) Time to Play!   
    
-A second version of this example is here with a number of graphical elements.   
-This example uses tfvis to display graphs while the model is trained.   
+A second version of this example is here with a number of graphical elements.   This example uses tfvis to display graphs while the model is trained.   
 
 The udemy course I recommend is https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/learn/lecture/15381100#overview   
 This course allowed me to create the file below.
@@ -395,14 +394,14 @@ This course allowed me to create the file below.
 
 
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/secondVersion.html   
-   
-Copy the contents of this file and save it as index.html.  Change the following line to your app id, save and then double click this file to view it.   
+
+If you added your application id and uploaded the file to your hosted directory then you should be able to view the file (change your-app-id to your appID from step 2) at:   
+https://your-app-id.mongodbstitch.com/secondVersion.html
 
 
-```js
-const appId = "YOUR-APP-ID"; // Set Realm app ID here.
-```
-   
+When you open the file you should be able to play with the data and train the model by adding more epochs.  Watch what happens when you run the model for 1,000 epochs.  You should see the prediction line begin to match the data.
+ 
+
 ![end](./img/section-end.png)   
    
     

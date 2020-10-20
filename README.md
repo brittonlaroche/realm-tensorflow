@@ -538,7 +538,7 @@ Be sure to __"Respond With Result"__ by toggling this paramter to ON, so that we
    
 ![Save Web Hook](./img/SaveTFModelWH.png)   
     
-Now we need to make sure we add the function for the Webhook's request editor.  Once teh webhook is saved the function editor should appear.  You can always get to the function editor by pressing the __"Function Editor"__ tab right next to the __"Settings Tab"__.   
+Now we need to make sure we add the function for the Webhook's request editor.  Once teh webhook is saved the function editor should appear.  You can always get to the function editor by pressing the __"Function Editor"__ tab right next to the __"Settings Tab"__.  Cut and paste the code below.  Save the changes and then be sure to __"Review and Deploy"__ changes.
    
 ```js
 // This function is the webhook's request handler.
@@ -576,7 +576,8 @@ exports = async function(payload, response) {
     return  result; 
 };
 ```   
-   
+
+Repeat the process above by creating a new 3rd Party Service called __"getTFModel"__ and then create a webhook named __"getTFModelWH"__.  Follow the steps above to configure your webhook, and cut and paste the function below into the function for the Webhook's request editor.
 
 ### Get TF Model Web Hook
    
@@ -616,7 +617,8 @@ exports = async function(payload, response) {
 };
 
 ```
-
+Save your changes and then __"Review and Deploy"__ your changes.  Next we will edit the index.html to add in the webhook end points we just created.   
+   
 https://github.com/brittonlaroche/realm-tensorflow/blob/main/html/index.html
 
 
@@ -629,6 +631,9 @@ Open the index.html file amd replace the following code __'YOUR-RETRIEVE-MODEL-W
 ```js
         var webhook_url = 'YOUR-RETRIEVE-MODEL-WEBHOOK';
 ```   
+    
+Once you have made the changes to the index.html file, go back to the __"Hosting"__ menu item on the left navigation panel.  When the hosting panel opens, press the upload button and uplaod your index.html file. Then __"Review and Deploy"__ your changes.  You should now be able to train a model and save it to the MongoDB atlas database.  You can see the saved model in the tfModel collection.
+
 ## Tutorial Contents 
 [Overview](#-overview)
 1. [Create the Atlas Cluster](#-create-an-atlas-cluster)
@@ -646,8 +651,17 @@ Open the index.html file amd replace the following code __'YOUR-RETRIEVE-MODEL-W
    
     
 ## ![10](./img/10b.png) Create a trigger to keep a history of the models
+    
+What happens if I train a model for 5,000 epochs and then save the model, and somone overwrites my model with 100 epochs?  No worries.  One of the things we can do is gove your model a unique name.  Another thing we can do is keep a history of the models as they change over time.  To keep a history of models in MongoDB Atlas, we can create a trigger on the tfModel collection.  Any time an insert or update or replace occurs we can insert a copy of the model into the tfModel_hist collection.
+
+We begin the process by selecting the __"Triggers"__ menu item from the left navigation pane.  In the add trigger window we select the trigger type to be a __"Database"__ trigger and we give the trigger a name __"trg_tfModel"__.  We set the trigger to __"Enabled"__.  We select the __"InventoryDemo"__ database and the __"tfModel"__ collection.  We will fire the trigger for any __"Insert"__, __"Update"__ or __"Replace"__ of a document.
+
+   
+![trigger](./img/trigger1.png)  
 
 
+Next we select the __"Function"__ event type and create a __"+ New Function"__ we give the function a name __"fnc_ModelHistory"__ and then copy and paste the code below:   
+   
 Paste the following function code into the function editor of the trigger:   
 ```js
 exports = function(changeEvent) {
@@ -669,8 +683,9 @@ exports = function(changeEvent) {
 };
 ```   
    
-![trigger](./img/trigger1.png)  
    
+Now we save the changes and __"Review and Deploy"__ the changes.  Now when we insert a new model a copy is placed in the tfModel_hist collection.  We can now overide any new model with a copy of a previous model.
+
 ## Tutorial Contents 
 [Overview](#-overview)
 1. [Create the Atlas Cluster](#-create-an-atlas-cluster)

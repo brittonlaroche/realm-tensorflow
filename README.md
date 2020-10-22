@@ -73,8 +73,8 @@ The final reason MongoDB is a great fit for machine learning is its the perfect 
 If you are new to machine learning and TensorFLow.js,  I recommend the following resources as these guides were used to build this hands on lab.   
    
 [TensorFlow Playground](http://playground.tensorflow.org/)   
-[TensorflowJS videos 3 at 7 minutes each](https://www.youtube.com/playlist?list=PLs6AluHXaQnjeI6jzDkpKXvbPj31i4GgF)   
-[Machine Learning with Tensor Flow, Udemy Course](https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/)   
+[Tensorflow.js videos: 3 videos at 7 minutes each](https://www.youtube.com/playlist?list=PLs6AluHXaQnjeI6jzDkpKXvbPj31i4GgF)   
+[Machine Learning with TensorFlow.js: Udemy Course](https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/)   
     
 ![end](./img/section-end.png)  
     

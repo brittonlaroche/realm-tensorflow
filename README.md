@@ -68,8 +68,16 @@ The final reason MongoDB is a great fit for machine learning is its the perfect 
 ![1](./img/mongoDBAtlas.png)   
    
 ![end](./img/section-end.png)   
-       
 
+## Learning Journey:
+If you are new to machine learning and TensorFLow.js,  I recommend the following resources as these guides were used to build this hands on lab.   
+   
+TensorFlow Playground: http://playground.tensorflow.org/
+TensorflowJS videos: https://www.youtube.com/playlist?list=PLs6AluHXaQnjeI6jzDkpKXvbPj31i4GgF
+Machine Learning with Tensor Flow, Udemy Course: https://www.udemy.com/course/machine-learning-in-javascript-with-tensorflow-js/
+    
+![end](./img/section-end.png)  
+    
 ## ![1](./img/1b.png) Create an Atlas Cluster
 Our first step is to create an atlas cluster. Create a free tier cluster known as an M0.     
 

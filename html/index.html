@@ -23,7 +23,7 @@
 <body>
 
 <script type="text/javascript">
-  const appId = "YOUR-APP-ID"; // Set Realm app ID here.
+  const appId = "inventory-hhsot"; // Set Realm app ID here.
   let user;
   let app;
   let credentials;
@@ -200,9 +200,10 @@
       ['loss']
     );
     var numEpochs = parseInt(document.getElementById("numEpochs").value);
+    var setBatchSize = parseInt(document.getElementById("batchSize").value);
     if (document.getElementById("graphLoss").checked){
       return model.fit(trainingFeatureTensor, trainingLabelTensor, {
-        batchSize: 32,
+        batchSize: setBatchSize,
         epochs: numEpochs,
         validationSplit: 0.2,
         callbacks: {
@@ -238,13 +239,14 @@
         const normalizedOutputTensor = model.predict(normalizedInput.tensor);
         const outputTensor = denormalize(normalizedOutputTensor, normalizedLabel.min, normalizedLabel.max);
         const outputValue = outputTensor.dataSync()[0];
-        const outputValueRounded = (outputValue/1000).toFixed(0)*1000;
+        const outputValueRounded = Math.round(outputValue);//(outputValue/1000).toFixed(0)*1000;
         var yDataField = document.getElementById("yData").value;
         var xDataField = document.getElementById("xData").value;
         if (xDataField === "price"){
           var totalSales = predictionInput * outputValueRounded;
+          var totalSalesRounded = Math.round(totalSales,2);
           document.getElementById("prediction-quantity").innerHTML = `${outputValueRounded}`;
-            document.getElementById("prediction-sales").innerHTML = `\$${totalSales}`  ;
+            document.getElementById("prediction-sales").innerHTML = `\$${totalSalesRounded}`  ;
 
         } else {
           document.getElementById("prediction-quantity").innerHTML = `${outputValueRounded}`;
@@ -284,7 +286,7 @@
  async function sendJsonModel ( fileName, inputDoc ) {
         var txt = "";
         var httpVerb = 'POST';
-        var webhook_url = 'YOUR-SAVE-MODEL-WEBHOOK';
+        var webhook_url = 'https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/saveTFModel/incoming_webhook/SaveTFModelWH';
         console.log("sendJsonModel filename: " + fileName);
         console.dir(inputDoc);
         inputDoc["storageID"] = `${storageID}`;
@@ -308,7 +310,7 @@
   async function getJsonModel(fileName){
         var txt = "";
         var httpVerb = 'POST';
-        var webhook_url = 'YOUR-RETRIEVE-MODEL-WEBHOOK';
+        var webhook_url = 'https://webhooks.mongodb-realm.com/api/client/v2.0/app/inventory-hhsot/service/getTFModel/incoming_webhook/getTFModelWH';
         console.log("getJsonModel filename: " + fileName);
         var inputDoc = `{"fileName":"${fileName}"}`;
         sendDoc = JSON.stringify(inputDoc);
@@ -405,8 +407,10 @@
     const layer = model.getLayer(undefined, 0);
     tfvis.show.layer({ name: "Layer 1" }, layer);
     await plotPredictionLine();
-
+    var trainStart = new Date();
     const result = await trainModel(model, trainingFeatureTensor, trainingLabelTensor);
+    var trainEnd = new Date()
+    var trainTime = (trainEnd - trainStart)/1000;
     console.log(result);
     const trainingLoss = result.history.loss.pop();
     console.log(`Training set loss: ${trainingLoss}`);
@@ -415,7 +419,8 @@
 
     document.getElementById("model-status").innerHTML = "Trained (unsaved)\n"
       + `Loss: ${trainingLoss.toPrecision(5)}\n`
-      + `Validation loss: ${validationLoss.toPrecision(5)}`;
+      + `Validation loss: ${validationLoss.toPrecision(5)}\n`
+      + `Training time in seconds: ${trainTime}`;
     document.getElementById("test-button").removeAttribute("disabled");
     document.getElementById("save-button").removeAttribute("disabled");
     document.getElementById("predict-button").removeAttribute("disabled");
@@ -581,7 +586,13 @@
 
             <p><label>Testing status:</label></p>
             <pre class="grey lighten-4" style="overflow-x: auto"><em id="testing-status">Not yet tested</em></pre>
-            <label>Number of Epochs: <input type="text" id="numEpochs" value="100"/></label>
+            <table><tr><td>
+              <label>Number of Epochs: <input type="text" id="numEpochs" value="100"/></label>
+            </td><td>
+              <label>Batch Size: <input type="text" id="batchSize" value="10"/></label>
+            </td></tr></table>
+            
+            
             <label>
               <input type="checkbox" id="graphLoss" checked/>
               <span>Graph Loss</span>
@@ -612,7 +623,7 @@
           <h5 class="center">Predict</h5>
 
           <label>Independent Variable (price/temp): <input type="number" id="prediction-input" value="2.89"/></label>
-          <button autocomplete="off" id="predict-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="predict()">Predict Gallons Sold</button>
+          <button autocomplete="off" id="predict-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="predict()">Predict Amounts</button>
           <button autocomplete="off" id="addNotes-button" class="waves-effect green darken-3 waves-light btn" disabled onclick="addNotes()">Add Notes</button>
           <p>Predicted quantity: <span style="font-size: 2em"><strong id="prediction-quantity"></strong></span></p>
           <p>Predicted Sales: <span style="font-size: 2em"><strong id="prediction-sales"></strong></span></p>

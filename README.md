@@ -66,7 +66,16 @@ Once the data is loaded, MongoDB provides you with a powerful query language and
 The final reason MongoDB is a great fit for machine learning is its the perfect place to store, share and retrieve your trained models.  We will not only store our models, but keep a history of our models in the database allowing us to restore a trained model from a previous version if we chose to do so.  Completeing this git hub will allow you to create a simple triiger to store a copy of your model in a history collection, and see how easy it is to keep a history of your trained mdoels over time inside MongoDB.   
 
 ![1](./img/mongoDBAtlas.png)   
+TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. Google claims, Robust ML production anywhere. Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use.    
+    
+![End to End](./img/TensorFlowDiagram.png)   
    
+The diagram above depicts how TensorFlow can run in GCP on its own cloud platform allowing you to tkae advantage of the Tensor Processing Unit (TPU) is an AI accelerator application-specific integrated circuit developed by Google specifically for neural network machine learning, particularly using Google's own TensorFlow software. Or you can use GPUs or CPUs prvided by the google cloud.  Additionally, you can run tensorflow on a self hosted Node.js installation inside the google cloud or another cloud provider or even on premises.
+
+Finally one can run TensorFlow.js in the browser and take advantage of your very own GPU on your laptop or desktop.  This lab was created to run in your own browser and utilize your GPU.  This requires no set up of software, no installation of node.js no configuration of a cloud account (oither than Atlas) and requires only a broswer and a code editor.
+    
+In all cases we use MongoDB Realm and Atlas to prepare the data from the MongoDB Atlas database and to store the trained model for query and future use.
+
 ![end](./img/section-end.png)   
 
 ## Learning Journey:

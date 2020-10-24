@@ -80,7 +80,7 @@ In all cases we use MongoDB Realm and Atlas to prepare the data from the MongoDB
    
 ![End to End](./img/TensorFlowDiagramSimple2.png)   
    
-In the diagram above we see the most common application, using GCP for heavy lifting Google ML on large complex tasks, and the browser for prediction and training small tasks.  Gone are the days of installing complex Hadoop infrastructure and Spark.  Today we can deploy MongoDB atlas as a service and GCP machine learning as a service and accomplish great things with zero installation and maintenance.   
+In the diagram above we see the most common application, using GCP for heavy lifting in Google ML on large complex tasks, and the browser for prediction and training small tasks.  Gone are the days of installing a complex Hadoop infrastructure and Spark.  Today we can deploy MongoDB atlas as a service and GCP machine learning as a service and accomplish great things with zero installation and maintenance.   
    
 ![end](./img/section-end.png)   
 

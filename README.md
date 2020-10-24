@@ -4,7 +4,7 @@ The following __"Hands on Lab"__ will allow you to create your first machine lea
    
 [Watch a 7 Minute Video on what you will create](https://youtu.be/JwlF_dP7T3Y)   
    
-<a href="https://youtu.be/JwlF_dP7T3Y" target="video"><img src="./img/RealmTensorFlowVideo.png"></a>
+<a href="https://youtu.be/JwlF_dP7T3Y" target="video"><img src="./img/RealmTensorFlowVideo.png" width="800px"></a>
 
 
 ## Tutorial Contents 

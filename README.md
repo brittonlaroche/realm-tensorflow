@@ -71,7 +71,9 @@ TensorFlow is an end-to-end open source platform for machine learning. It has a 
 ![End to End](./img/TensorFlowDiagram2.png)   
    
 The diagram above depicts how TensorFlow can run in GCP on its own cloud platform allowing you to take advantage of the Tensor Processing Unit, or TPU. The TPU is an AI accelerator application-specific integrated circuit developed by Google specifically for neural network machine learning, particularly using Google's own TensorFlow software. Or staying within the GCP TensorFlow Machine Learning environment,  you can use GPUs or CPUs provided by the google cloud.  Additionally, you can run TensorFlow on a self hosted Node.js installation inside the google cloud or another cloud provider, or even on premises.
-
+   
+![TPU](./img/TPU.png)  
+   
 Finally one can run TensorFlow.js in the browser and take advantage of your very own GPU on your laptop or desktop.  This lab was created to run in your own browser and utilize your GPU.  This requires no set up of software, no installation of node.js no configuration of a cloud account (oither than Atlas) and requires only a broswer and a code editor.
     
 In all cases we use MongoDB Realm and Atlas to prepare the data from the MongoDB Atlas database and to store the trained model for query and future use.

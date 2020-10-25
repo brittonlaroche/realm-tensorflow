@@ -38,8 +38,15 @@ TensorFlow.js is a library for machine learning in JavaScript. Develop ML models
    
 http://playground.tensorflow.org/   
    
-The playground application allows you to build and train a neural network in your broswer.
-   
+The playground application allows you to build and train a neural network in your broswer. I chose TensorFlow.js to showcase the power of machine learning with MongDB Atlas and Realm in the Browserfor the following reasons:
+
+1. No Drivers / No Installations
+2. Its Interactive, you can play with the data.
+3. It has access to Sensors, Webcams and Smart Phone Data with standard APIs to access
+4. Data can be processed and remain on the client
+
+For these reasons I selected TensorFlow.js and the broswer for this very powerful lab.  Gone are the days where you had to install a complex Hadoop infrastructure with Spark and write complex functions and logic just to do machine learning.  Today With MongoDB Atlas, Tensorflow.js and a broswer you can do highly interactive machine learning with zero installation and very little complexity.  The barriers to machine learning have been removed.
+
 ![end](./img/section-end.png)   
    
     

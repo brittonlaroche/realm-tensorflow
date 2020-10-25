@@ -41,12 +41,12 @@ http://playground.tensorflow.org/
 The playground application allows you to build and train a neural network in your broswer. Following on the heels of the succesful playground application, Google released deeplearn.js in August of 2017 to allow developers to used javascript in the browser to do machine learning.  In April of 2018 Google took what they had learned from deeplearn.js, and released it into the TensorFlow family by offially releasing TensorFlow.js.
 
 I chose TensorFlow.js to showcase the power of machine learning with MongDB Atlas and Realm in the Browserfor the following reasons:
-
-__1. Zero Installation:__ No Drivers / No Installations
-__2. Interactive:__ Its Interactive, you can play with the data.
-__3. Sensors:__ It has access to Sensors, Webcams and Smart Phone Data with standard APIs to access the sensors
-__4. Distributed:__ Data can be processed and remain on the client
-
+   
+__1. Zero Installation:__ No Drivers / No Installations   
+__2. Interactive:__ Its Interactive, you can play with the data.   
+__3. Sensors:__ It has access to Sensors, Webcams and Smart Phone Data with standard APIs to access the sensors   
+__4. Distributed:__ Data can be processed and remain on the client   
+   
 For these reasons I selected TensorFlow.js and the broswer for this very powerful lab.  Gone are the days where you had to install a complex Hadoop infrastructure with Spark and write complex functions and logic just to do machine learning.  Today With MongoDB Atlas, Tensorflow.js and a broswer you can do highly interactive machine learning with zero installation and very little complexity.  The barriers to machine learning have been removed.
 
 ![end](./img/section-end.png)   

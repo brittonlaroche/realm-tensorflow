@@ -98,7 +98,7 @@ Finally one can run TensorFlow.js in the browser and take advantage of your very
     
 In all cases we use MongoDB Realm and Atlas to prepare the data from the MongoDB Atlas database and to store the trained model for query and future use.
    
-![End to End](./img/TensorFlowDiagramSimple2.png)   
+![End to End](./img/TensorFlowDiagramSimple3.png)   
    
 In the diagram above we see the most common application, using GCP for heavy lifting in Google ML on large complex tasks, and the browser for prediction and training small tasks.  Gone are the days of installing a complex Hadoop infrastructure and Spark.  Today we can deploy MongoDB atlas as a service and GCP machine learning as a service and accomplish great things with zero installation and maintenance.   
    

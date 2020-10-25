@@ -24,7 +24,7 @@ The following __"Hands on Lab"__ will allow you to create your first machine lea
 | Why TensorFlow?       | 
 |-----------------------|
 |![TensorFlow](./img/tfLogo2.png)    | 
-|TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. |
+|TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. TensorFlow was developed by the Google Brain team for internal Google use. It was released under the Apache License 2.0 on November 9, 2015. In Jan 2019, Google announced TensorFlow 2.0. In May 2019, Google announced TensorFlow Graphics for deep learning in computer graphics. TensorFlow 2.0 became officially available in Sep 2019.|
 
 |Easy model building                            | Robust ML production anywhere                 |  Powerful experimentation for research        |
 |-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
@@ -69,7 +69,11 @@ Once the data is loaded, MongoDB provides you with a powerful query language and
 ### Store and Retrieve Trained Models as JSON Documents
 The final reason MongoDB is a great fit for machine learning is its the perfect place to store, share and retrieve your trained models.  We will not only store our models, but keep a history of our models in the database allowing us to restore a trained model from a previous version if we chose to do so.  Completeing this git hub will allow you to create a simple triiger to store a copy of your model in a history collection, and see how easy it is to keep a history of your trained mdoels over time inside MongoDB.   
 
+### MongoDB Atlas offers Database as a Service Across all Modern Cloud Providers
 ![1](./img/mongoDBAtlas.png)   
+On June 28, 2016 MongoDB atlas was released it is the simplest, most robust, and most cost effective way to run MongoDB in the Cloud. Atlas is a database as a service that makes running MongoDB almost effortless, whether you run a single replica set, or a sharded cluster hosting a hundred terabytes. Today MongoDB Atlas Is The First Cloud Database To Enable Customers To Run Applications Simultaneously On All Major Cloud Providers. Using multi-cloud clusters, customers can easily take advantage of the unique capabilities and reach of different cloud providers. This means customers can take advantage of the benefits of deploying applications across multiple cloud providers without the added operational complexity of managing data replication and migration across clouds.
+
+
 TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. Google claims, __"Robust ML production anywhere. Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use."__   
     
 ![End to End](./img/TensorFlowDiagram2.png)   
@@ -77,6 +81,10 @@ TensorFlow is an end-to-end open source platform for machine learning. It has a 
 The diagram above depicts how TensorFlow can run in GCP on its own cloud platform allowing you to take advantage of the Tensor Processing Unit, or TPU. The TPU is an AI accelerator application-specific integrated circuit developed by Google specifically for neural network machine learning, particularly using Google's own TensorFlow software. Or staying within the GCP TensorFlow Machine Learning environment,  you can use GPUs or CPUs provided by the google cloud.  Additionally, you can run TensorFlow on a self hosted Node.js installation inside the google cloud or another cloud provider, or even on premises.
    
 ![TPU](./img/TPU.png)  
+In May 2016, Google announced its Tensor processing unit (TPU), an application-specific integrated circuit (ASIC, a hardware chip) built specifically for machine learning and tailored for TensorFlow. A TPU is a programmable AI accelerator designed to provide high throughput of low-precision arithmetic (e.g., 8-bit), and oriented toward using or running models rather than training them. Google announced they had been running TPUs inside their data centers for more than a year, and had found them to deliver an order of magnitude better-optimized performance per watt for machine learning. In May 2018, Google announced the third-generation TPUs delivering up to 420 teraflops of performance and 128 GB high bandwidth memory (HBM). Cloud TPU v3 Pods offer 100+ petaflops of performance and 32 TB HBM.
+
+### Edge TPU
+In July 2018, the Edge TPU was announced. Edge TPU is Google's purpose-built ASIC chip designed to run TensorFlow Lite machine learning (ML) models on small client computing devices such as smartphones[21] known as edge computing.
    
 Finally one can run TensorFlow.js in the browser and take advantage of your very own GPU on your laptop or desktop.  This lab was created to run in your own browser and utilize your GPU.  This requires no set up of software, no installation of node.js no configuration of a cloud account (oither than Atlas) and requires only a broswer and a code editor.
     

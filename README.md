@@ -2,8 +2,8 @@
 
 The following __"Hands on Lab"__ will allow you to create your first machine learning program with nothing more than a text editor and a browser.  Depending on your familiarity with MongoDB and basic coding, the lab can be anywhere from 60 to 90 minutes in total. I chose MongoDB and Tensorflow for the ease of setup, flexibility and full set of features. Buckle up, its a fun ride!  
    
-[Click here to watch a 7 Minute Video on what you will create](https://youtu.be/JwlF_dP7T3Y)   
-<a href="https://youtu.be/JwlF_dP7T3Y" target="video"><img src="./img/RealmTensorFlowVideo.png" width="600px"></a>
+[Click here to watch a 7 Minute Video on what you will create](https://youtu.be/aX-PZ6WKHNg)   
+<a href="https://youtu.be/JwlF_dP7T3Y" target="video"><img src="./img/MongoDBAtlasTensorFlowVideo.png" width="600px"></a>
 
 
 ## Tutorial Contents 

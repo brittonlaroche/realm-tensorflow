@@ -86,7 +86,7 @@ On June 28, 2016 MongoDB atlas was released it is the simplest, most robust, and
 
 TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. Google claims, __"Robust ML production anywhere. Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use."__   
     
-![End to End](./img/TensorFlowDiagram2.png)   
+![End to End](./img/TensorFlowDiagram5.png)   
    
 The diagram above depicts how TensorFlow can run in GCP on its own cloud platform allowing you to take advantage of the Tensor Processing Unit, or TPU. The TPU is an AI accelerator application-specific integrated circuit developed by Google specifically for neural network machine learning, particularly using Google's own TensorFlow software. Or staying within the GCP TensorFlow Machine Learning environment,  you can use GPUs or CPUs provided by the google cloud.  Additionally, you can run TensorFlow on a self hosted Node.js installation inside the google cloud or another cloud provider, or even on premises.
    
@@ -99,7 +99,7 @@ Finally one can run TensorFlow.js in the browser and take advantage of your very
     
 In all cases we use MongoDB Realm and Atlas to prepare the data from the MongoDB Atlas database and to store the trained model for query and future use.
    
-![End to End](./img/TensorFlowDiagramSimple3.png)   
+![End to End](./img/TensorFlowDiagramSimple5.png)   
    
 In the diagram above we see the most common application, using GCP for heavy lifting in Google ML on large complex tasks, and the browser for prediction and training small tasks.  Gone are the days of installing a complex Hadoop infrastructure and Spark.  Today we can deploy MongoDB atlas as a service and GCP machine learning as a service and accomplish great things with zero installation and maintenance.   
    

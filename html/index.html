@@ -262,6 +262,13 @@
     //console.log("model");
     //console.log("model: " + JSON.stringify(model));
     console.dir(model);
+    var storeId = parseFloat(document.getElementById("searchStoreId").value);
+    var searchDoc = {};
+    if (storeId && storeId != ""){
+      storageID = "realm-tensorflow-model-" + storeId;
+    } else {
+      storageID = "realm-tensorflow-model";
+    }
     const saveResults = await model.save(`localstorage://${storageID}`);
     document.getElementById("model-status").innerHTML = `Trained (saved ${saveResults.modelArtifactsInfo.dateSaved})`;
 
@@ -509,7 +516,7 @@
 <!--   Header   -->
 <div class="section no-pad-bot" id="index-banner">
   <div class="container">
-    <h5 class="header center green-text small">Linear regression with MongoDB Atlas, Realm and TensorFlow.js</h5>
+    <h5 class="header center green-text small">Machine Learning with MongoDB Atlas, Realm and TensorFlow.js</h5>
     <div class="row center">
       <h6 class="header col s12 light">Train a model to predict Gallons sold from Gas Price and Weather Data.</h6>
     </div>

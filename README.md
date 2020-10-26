@@ -5,7 +5,7 @@ The following __"Hands on Lab"__ will allow you to create your first machine lea
 |-----|---------------------------|-----|   
 ||[Click here to watch a 7 Minute Video on what you will create](https://youtu.be/aX-PZ6WKHNg)||   
 ||<a href="https://youtu.be/aX-PZ6WKHNg" target="video"><img src="./img/MongoDBAtlasTensorFlowVideo.png" width="600px"></a>||   
-|![TensorFlow](./img/tfModel.png)|![TensorFlow](./img/tfModel.png)|![TensorFlow](./img/tfModel.png)|   
+|![TensorFlow](./img/tfModel.png)||![TensorFlow](./img/tfModel.png)|   
 
 ## Tutorial Contents 
 [Overview](#-overview)

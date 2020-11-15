@@ -99,10 +99,8 @@
     var searchDoc = {};
     if (storeId && storeId != ""){
       searchDoc["store"] = storeId;
-      storageID = "realm-tensorflow-model-" + storeId;
-    } else {
-      storageID = "realm-tensorflow-model";
-    }
+    } 
+    setStorageId();
     console.log("searchDoc: " +JSON.stringify(searchDoc));
     items = await coll.find(searchDoc);
     console.log("Items Length: " + items.length);
@@ -264,11 +262,7 @@
     console.dir(model);
     var storeId = parseFloat(document.getElementById("searchStoreId").value);
     var searchDoc = {};
-    if (storeId && storeId != ""){
-      storageID = "realm-tensorflow-model-" + storeId;
-    } else {
-      storageID = "realm-tensorflow-model";
-    }
+    setStorageId();
     const saveResults = await model.save(`localstorage://${storageID}`);
     document.getElementById("model-status").innerHTML = `Trained (saved ${saveResults.modelArtifactsInfo.dateSaved})`;
 
@@ -288,7 +282,6 @@
     modelDoc["model_topology_value"] = model_topology;
     modelDoc["model_metadata_value"] = model_metadata;
     await sendJsonModel(`tensorflowjs_models/${storageID}/model`, modelDoc);
-
   }
  async function sendJsonModel ( fileName, inputDoc ) {
         var txt = "";
@@ -466,17 +459,43 @@
     points = [];
     var xDataField = document.getElementById("xData").value;
     var yDataField = document.getElementById("yData").value;
+    var xDataFieldList = [];
+    var cleanXDataField = xDataField.replace(/\s/g, '');
+    xDataFieldList = cleanXDataField.split(",");
+    console.log("xDataFieldList");
+    console.dir(xDataFieldList);
+    var listLength = xDataFieldList.length;
     var numDocs = items.length;
-    for  (i=0;i<numDocs;i++){
-      points[i] = {x: items[i][`${xDataField}`], y: items[i][`${yDataField}`]};
+    var pointCount = 0;
+    if ( listLength > 1){
+      //we have multiple points to map
+      //convert each x value to a new point and copy the corresponding y value
+      
+      for  (i=0;i<numDocs;i++){
+        for (j=0;j<listLength;j++){
+          if(xDataFieldList[j] && yDataField){
+            points[pointCount] = {x: items[i][`${xDataFieldList[j]}`], y: items[i][`${yDataField}`]};
+            pointCount = pointCount+1;
+          }
+        }
+      }
+    } else {
+      //we just have one point
+      for  (i=0;i<numDocs;i++){
+        points[i] = {x: items[i][`${xDataField}`], y: items[i][`${yDataField}`]};
+      }
     }
     if(points.length % 2 !== 0) { // If odd number of elements
       points.pop(); // remove one element
     }
+    console.log("points");
+    console.dir(points);
     tf.util.shuffle(points);
     plot(points, xDataField);
 
     // Extract Features (inputs)
+    console.log("points map");
+    console.dir(points);
     const featureValues = points.map(p => p.x);
     const featureTensor = tf.tensor2d(featureValues, [featureValues.length, 1]);
 
@@ -497,6 +516,16 @@
     document.getElementById("model-status").innerHTML = "No model trained";
     document.getElementById("train-button").removeAttribute("disabled");
     document.getElementById("load-button").removeAttribute("disabled");
+  }
+  function setStorageId(){
+    var storeId = parseFloat(document.getElementById("searchStoreId").value);
+    var currentCollection = document.getElementById("loadCollection").value;
+    var searchDoc = {};
+    if (storeId && storeId != ""){
+      storageID = "realm-tensorflow-model-" + currentCollection + "-" + storeId;
+    } else {
+      storageID = "realm-tensorflow-model" + currentCollection;
+    }
   }
   function addNotes(){
     var quantity = document.getElementById("prediction-quantity").innerHTML;

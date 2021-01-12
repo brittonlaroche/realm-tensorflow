@@ -1,6 +1,6 @@
 # Machine Learning with MongDB Atlas, Realm & TensorFlow
 
-The following __"Hands on Lab"__ will allow you to create your first machine learning program with nothing more than a text editor and a browser.  Depending on your familiarity with MongoDB and basic coding, the lab can be anywhere from 60 to 90 minutes in total. I chose MongoDB and Tensorflow for the ease of setup, flexibility and full set of features. Buckle up, its a fun ride!  
+The following __"Hands-on Lab"__ will allow you to create your first machine learning program with nothing more than a text editor and a browser.  Depending on your familiarity with MongoDB and basic coding, the lab can be anywhere from 60 to 90 minutes in total. I chose MongoDB and Tensorflow for the ease of setup, flexibility, and a full set of features. Buckle up, it’s a fun ride!  
 |Video|    
 |---------------------------|   
 |[Click here to watch a 7 Minute Video on what you will create](https://youtu.be/aX-PZ6WKHNg)|   
@@ -25,7 +25,7 @@ The following __"Hands on Lab"__ will allow you to create your first machine lea
 | Why TensorFlow?       | 
 |-----------------------|
 |![TensorFlow](./img/tfLogo2.png)    | 
-|TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. TensorFlow was developed by the Google Brain team for internal Google use. It was released under the Apache License 2.0 on November 9, 2015. In Jan 2019, Google announced TensorFlow 2.0. In May 2019, Google announced TensorFlow Graphics for deep learning in computer graphics. TensorFlow 2.0 became officially available in Sep 2019.|
+|TensorFlow is an end-to-end open-source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries, and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML-powered applications. TensorFlow was developed by the Google Brain team for internal Google use. It was released under the Apache License 2.0 on November 9, 2015. In Jan 2019, Google announced TensorFlow 2.0. In May 2019, Google announced TensorFlow Graphics for deep learning in computer graphics. TensorFlow 2.0 became officially available in Sep 2019.|
 
 |Easy model building                            | Robust ML production anywhere                 |  Powerful experimentation for research        |
 |-----------------------------------------------|-----------------------------------------------|-----------------------------------------------|
@@ -39,26 +39,26 @@ TensorFlow.js is a library for machine learning in JavaScript. Develop ML models
    
 http://playground.tensorflow.org/   
    
-The playground application allows you to build and train a neural network in your broswer. Following on the heels of the succesful playground application, Google released deeplearn.js in August of 2017 to allow developers to used javascript in the browser to do machine learning.  In April of 2018 Google took what they had learned from deeplearn.js, and released it into the TensorFlow family by offially releasing TensorFlow.js.
+The playground application allows you to build and train a neural network in your browser. Following on the heels of the successful playground application, Google released deeplearn.js in August of 2017 to allow developers to used javascript in the browser to do machine learning.  In April of 2018, Google took what they had learned from deeplearn.js, and released it into the TensorFlow family by officially releasing TensorFlow.js.
 
-I chose TensorFlow.js to showcase the power of machine learning with MongDB Atlas and Realm in the Browserfor the following reasons:
+I chose TensorFlow.js to showcase the power of machine learning with MongoDB Atlas and Realm in the Browser for the following reasons:
    
 __1. Zero Installation:__ No Drivers / No Installations   
 __2. Interactive:__ Its Interactive, you can play with the data.   
-__3. Sensors:__ It has access to Sensors, Webcams and Smart Phone Data with standard APIs to access the sensors   
+__3. Sensors:__ It has access to Sensors, Webcams, and Smart Phone Data with standard APIs to access the sensors   
 __4. Distributed:__ Data can be processed and remain on the client   
    
-For these reasons I selected TensorFlow.js and the broswer for this very powerful lab.  Gone are the days where you had to install a complex Hadoop infrastructure with Spark and write complex functions and logic just to do machine learning.  Today With MongoDB Atlas, Tensorflow.js and a broswer you can do highly interactive machine learning with zero installation and very little complexity.  The barriers to machine learning have been removed.
+For these reasons, I selected TensorFlow.js and the browser for this very powerful lab.  Gone are the days where you had to install a complex Hadoop infrastructure with Spark and write complex functions and logic just to do machine learning.  Today With MongoDB Atlas, Tensorflow.js, and a browser you can do highly interactive machine learning with zero installation and very little complexity.  The barriers to machine learning have been removed.
 
 ![end](./img/section-end.png)   
    
     
 ## Getting Started
-This project uses Tensorflow.js, MongoDB Realm and Atlas to provide you with everything you need to create a cloud based machine learning platform with nothing more than a modern web browser, and the determination to begin with some good "old fashioned" human learning.  This short tutorial expects that you know nothing about MongoDB Atlas, Realm or Machine Learning with Google Tensorflow.    
+This project uses Tensorflow.js, MongoDB Realm, and Atlas to provide you with everything you need to create a cloud-based machine learning platform with nothing more than a modern web browser, and the determination to begin with some good "old fashioned" human learning.  This short tutorial expects that you know nothing about MongoDB Atlas, Realm, or Machine Learning with Google Tensorflow.    
 
-I chose Tensorflow.js for this project because it is very intuitive, easy to pick up and the results can be seen directly in the web browser with just a few lines of code. I was able to watch a few Tensorflow.js videos and create the first version of this app in a weekend.  Its only 88 lines of code but it loads sales data from a gas station into MongoDB, creates a Tensorflow model from MongoDB, trains the model, and makes a prediction on how many gallons will be sold based on price.  This first program does all this in just 88 lines of code!
+I chose Tensorflow.js for this project because it is very intuitive, easy to pick up and the results can be seen directly in the web browser with just a few lines of code. I was able to watch a few Tensorflow.js videos and create the first version of this app on a weekend.  It’s only 88 lines of code but it loads sales data from a gas station into MongoDB, creates a Tensorflow model from MongoDB, trains the model, and makes a prediction on how many gallons will be sold based on price.  This first program does all this in just 88 lines of code!
 
-I highly recommend watching the followng 3 videos, about 7 minutes each.  It will be the best 21 minutes you can spend to learn all the core concepts.    
+I highly recommend watching the following 3 videos, about 7 minutes each.  It will be the best 21 minutes you can spend to learn all the core concepts.    
    
 <a href="https://www.youtube.com/playlist?list=PLs6AluHXaQnjeI6jzDkpKXvbPj31i4GgF" target="videos"><img src="./img/tfjsvideos.png"></a>   
 
@@ -71,33 +71,33 @@ I also recommend a Udemy course for some deeper learning and good examples and p
 ## Why MongoDB?
 
 ### Flexible Data Model
-MongoDB is the one of the best databases for machine learning for a number of reasons.  The first reason is that MongoDB has a flexible schema, unlike a relational database where you have to define a schema and tables with column definitions, MongoDB allows you to load data directly with out any upfront schema design.  This means that you can load data form any new source and get to work immediately. In this tutorial we will build one app that can do machine learning on gas price data, add temperature data, and then load real estate data and do machine learning on house prices with out changing one single line of code. 
+MongoDB is one of the best databases for machine learning for a number of reasons.  The first reason is that MongoDB has a flexible schema, unlike a relational database where you have to define a schema and tables with column definitions, MongoDB allows you to load data directly without any upfront schema design.  This means that you can load data from any new source and get to work immediately. In this tutorial, we will build one app that can do machine learning on gas price data, add temperature data, and then load real estate data and do machine learning on house prices without changing one single line of code. 
 
 ### Powerful Query Language
-Once the data is loaded, MongoDB provides you with a powerful query language and indexes to give you fast access to very specific values that you would want to use. What is more with MongoDB Atlas you can create a free tier in any of the major cloud providers (AWS, GCP and Azure) in just 7 minutes. But don't take my word for it, in the next few sections you will literally see for yourself.   
+Once the data is loaded, MongoDB provides you with a powerful query language and indexes to give you fast access to very specific values that you would want to use. What is more, with MongoDB Atlas you can create a free tier in any of the major cloud providers (AWS, GCP, and Azure) in just 7 minutes. But don't take my word for it, in the next few sections you will literally see for yourself.   
 
 ### Store and Retrieve Trained Models as JSON Documents
-The final reason MongoDB is a great fit for machine learning is its the perfect place to store, share and retrieve your trained models.  We will not only store our models, but keep a history of our models in the database allowing us to restore a trained model from a previous version if we chose to do so.  Completeing this git hub will allow you to create a simple triiger to store a copy of your model in a history collection, and see how easy it is to keep a history of your trained mdoels over time inside MongoDB.   
+The final reason MongoDB is a great fit for machine learning is .. it is the perfect place to store, share, and retrieve your trained models.  We will not only store our models but keep a history of our models in the database allowing us to restore a trained model from a previous version if we chose to do so.  Completing this git hub will allow you to create a simple trigger to store a copy of your model in a history collection, and see how easy it is to keep a history of your trained models over time inside MongoDB.   
 
 ### MongoDB Atlas offers Database as a Service Across all Modern Cloud Providers
 ![1](./img/mongoDBAtlas.png)   
-On June 28, 2016 MongoDB atlas was released it is the simplest, most robust, and most cost effective way to run MongoDB in the Cloud. Atlas is a database as a service that makes running MongoDB almost effortless, whether you run a single replica set, or a sharded cluster hosting a hundred terabytes. Today, as of Oct 22, 2020, MongoDB Atlas Is The First Cloud Database To Enable Customers To Run Applications Simultaneously On All Major Cloud Providers. Using multi-cloud clusters, customers can easily take advantage of the unique capabilities and reach of different cloud providers. This means customers can take advantage of the benefits of deploying applications across multiple cloud providers without the added operational complexity of managing data replication and migration across clouds.
+On June 28, 2016, MongoDB Atlas was released, it is the simplest, most robust, and most cost-effective way to run MongoDB in the Cloud. Atlas is a database as a service that makes running MongoDB almost effortless, whether you run a single replica set, or a sharded cluster hosting a hundred terabytes. Today, as of Oct 22, 2020, MongoDB Atlas Is The First Cloud Database To Enable Customers To Run Applications Simultaneously On All Major Cloud Providers. Using multi-cloud clusters, customers can easily take advantage of the unique capabilities and reach of different cloud providers. This means customers can take advantage of the benefits of deploying applications across multiple cloud providers without the added operational complexity of managing data replication and migration across clouds.
 
 
-TensorFlow is an end-to-end open source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML powered applications. Google claims, __"Robust ML production anywhere. Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use."__   
+TensorFlow is an end-to-end open-source platform for machine learning. It has a comprehensive, flexible ecosystem of tools, libraries, and community resources that lets researchers push the state-of-the-art in ML and developers easily build and deploy ML-powered applications. Google claims, __"Robust ML production anywhere. Easily train and deploy models in the cloud, on-prem, in the browser, or on-device no matter what language you use."__   
     
 ![End to End](./img/TensorFlowDiagram5.png)   
    
-The diagram above depicts how TensorFlow can run in GCP on its own cloud platform allowing you to take advantage of the Tensor Processing Unit, or TPU. The TPU is an AI accelerator application-specific integrated circuit developed by Google specifically for neural network machine learning, particularly using Google's own TensorFlow software. Or staying within the GCP TensorFlow Machine Learning environment,  you can use GPUs or CPUs provided by the google cloud.  Additionally, you can run TensorFlow on a self hosted Node.js installation inside the google cloud or another cloud provider, or even on premises.
+The diagram above depicts how TensorFlow can run in GCP on its own cloud platform allowing you to take advantage of the Tensor Processing Unit, or TPU. The TPU is an AI accelerator application-specific integrated circuit developed by Google specifically for neural network machine learning, particularly using Google's own TensorFlow software. Or staying within the GCP TensorFlow Machine Learning environment,  you can use GPUs or CPUs provided by the google cloud.  Additionally, you can run TensorFlow on a self-hosted Node.js installation inside the google cloud or another cloud provider, or even on-premises.
    
 ![TPU](./img/TPU.png)  
-In May 2016, Google announced its Tensor processing unit (TPU), an application-specific integrated circuit (ASIC, a hardware chip) built specifically for machine learning and tailored for TensorFlow. A TPU is a programmable AI accelerator designed to provide high throughput of low-precision arithmetic (e.g., 8-bit), and oriented toward using or running models rather than training them. Google announced they had been running TPUs inside their data centers for more than a year, and had found them to deliver an order of magnitude better-optimized performance per watt for machine learning. In May 2018, Google announced the third-generation TPUs delivering up to 420 teraflops of performance and 128 GB high bandwidth memory (HBM). Cloud TPU v3 Pods offer 100+ petaflops of performance and 32 TB HBM.   
+In May 2016, Google announced its Tensor processing unit (TPU), an application-specific integrated circuit (ASIC, a hardware chip) built specifically for machine learning and tailored for TensorFlow. A TPU is a programmable AI accelerator designed to provide high throughput of low-precision arithmetic (e.g., 8-bit), and oriented toward using or running models rather than training them. Google announced they had been running TPUs inside their data centers for more than a year and had found them to deliver an order of magnitude better-optimized performance per watt for machine learning. In May 2018, Google announced the third-generation TPUs delivering up to 420 teraflops of performance and 128 GB high bandwidth memory (HBM). Cloud TPU v3 Pods offer 100+ petaflops of performance and 32 TB HBM.   
    
 __Edge TPU:__ In July 2018, the Edge TPU was announced. Edge TPU is Google's purpose-built ASIC chip designed to run TensorFlow Lite machine learning (ML) models on small client computing devices such as smartphones[21] known as edge computing.
    
-Finally one can run TensorFlow.js in the browser and take advantage of your very own GPU on your laptop or desktop.  This lab was created to run in your own browser and utilize your GPU.  This requires no set up of software, no installation of node.js no configuration of a cloud account (oither than Atlas) and requires only a broswer and a code editor.
+Finally, one can run TensorFlow.js in the browser and take advantage of your very own GPU on your laptop or desktop.  This lab was created to run in your own browser and utilize your GPU.  This requires no set up of software, no installation of node.js no configuration of a cloud account (other than Atlas), and requires only a browser and a code editor.
     
-In all cases we use MongoDB Realm and Atlas to prepare the data from the MongoDB Atlas database and to store the trained model for query and future use.
+In all cases, we use MongoDB Realm and Atlas to prepare the data from the MongoDB Atlas database and to store the trained model for query and future use.
    
 ![End to End](./img/MLDiagram.png)   
    
@@ -106,7 +106,7 @@ In the diagram above we see the most common application, using GCP for heavy lif
 ![end](./img/section-end.png)   
 
 ## Learning Journey:
-If you are new to machine learning and TensorFLow.js,  I recommend the following resources as these guides were used to build this hands on lab.   
+If you are new to machine learning and TensorFLow.js,  I recommend the following resources as these guides were used to build this hands-on lab.   
    
 [TensorFlow Playground](http://playground.tensorflow.org/)   
 [Tensorflow.js videos: 3 videos at 7 minutes each](https://www.youtube.com/playlist?list=PLs6AluHXaQnjeI6jzDkpKXvbPj31i4GgF)   
@@ -746,4 +746,5 @@ Now we save the changes and __"Review and Deploy"__ the changes.  Now when we in
 8. [Time to Play](#-time-to-play)
 9. [Save the model after training](#-save-the-model-data-after-training)
 10. [Create a trigger to keep a history of the models](#-create-a-trigger-to-keep-a-history-of-the-models)
+
 
